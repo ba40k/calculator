@@ -19,9 +19,7 @@ public:
     T top() const;
     bool empty() const;
     void pop();
-    int size() {
-
-    }
+    int size()const;
 
 
 };
