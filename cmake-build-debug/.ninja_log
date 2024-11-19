@@ -1,5 +1,17 @@
 # ninja log v6
-5	72	1732037867912174615	CMakeFiles/calculator.dir/main.cpp.o	b54b69d22b3495e5
-1	115	1732037892674468107	CMakeFiles/calculator.dir/stack.cpp.o	3f67dc7f1432a99
-1	19	1732038937209727396	CMakeFiles/calculator.dir/main.cpp.o	b54b69d22b3495e5
-2	428	1732038937210727240	CMakeFiles/calculator.dir/stack.cpp.o	3f67dc7f1432a99
+1	43	1732040284949067200	build.ninja	fa5ac841498681e2
+2	442	1732040000863182709	CMakeFiles/calculator.dir/main.cpp.o	b54b69d22b3495e5
+2	480	1732039834016876917	CMakeFiles/calculator.dir/stack.cpp.o	3f67dc7f1432a99
+480	543	1732039834494934029	calculator	b4ce6c3cacd6fee8
+0	21	1732040284949067200	build.ninja	fa5ac841498681e2
+2	411	1732040284957070352	CMakeFiles/calculator.dir/stack.cpp.o	3f67dc7f1432a99
+1	418	1732040284956069958	CMakeFiles/calculator.dir/main.cpp.o	b54b69d22b3495e5
+418	488	1732040285373234454	calculator	b4ce6c3cacd6fee8
+2	438	1732040295277165905	CMakeFiles/calculator.dir/main.cpp.o	b54b69d22b3495e5
+438	498	1732040295713340133	calculator	b4ce6c3cacd6fee8
+1	442	1732040331036473494	CMakeFiles/calculator.dir/main.cpp.o	b54b69d22b3495e5
+442	505	1732040331478222573	calculator	b4ce6c3cacd6fee8
+2	459	1732040347917526418	CMakeFiles/calculator.dir/main.cpp.o	b54b69d22b3495e5
+459	523	1732040348375404548	calculator	b4ce6c3cacd6fee8
+2	479	1732040363633706444	CMakeFiles/calculator.dir/main.cpp.o	b54b69d22b3495e5
+479	543	1732040364110658430	calculator	b4ce6c3cacd6fee8
