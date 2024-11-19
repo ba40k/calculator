@@ -12,6 +12,11 @@ Stack<T>::Stack() {
 
 template<typename T>
 void Stack<T>::push(T data) {
+    if(size()==0) {
+        head.data=data;
+        curSize=1;
+        return;
+    }
     node* newNodePtr = new node;
     newNodePtr->data = head.data;
     newNodePtr->previous = head.previous;
@@ -20,6 +25,23 @@ void Stack<T>::push(T data) {
     head.previous = newNodePtr;
 
     curSize++;
+}
+
+template<typename T>
+void Stack<T>::pop () {
+    if (size()==0) {
+        throw "Stack is empty";
+    }
+    if (size()==1) {
+        head.data = 0;
+        head.previous = nullptr;
+        curSize--;
+        return;
+    }
+    node* toDelete = &head;
+    head.previous = head.previous->previous;
+    head.data = head.previous->data;
+    delete toDelete;;
 }
 
 
