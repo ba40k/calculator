@@ -5,24 +5,24 @@
 
 template<typename T>
 Stack<T>::Stack() {
-    head.data=0;
-    head.previous=nullptr;
+    head->data=0;
+    head->previous=nullptr;
     curSize=0;
 }
 
 template<typename T>
 void Stack<T>::push(T data) {
     if(size()==0) {
-        head.data=data;
+        head->data=data;
         curSize=1;
         return;
     }
-    node* newNodePtr = new node;
-    newNodePtr->data = head.data;
-    newNodePtr->previous = head.previous;
+    Node* newNodePtr = new Node;
+    newNodePtr->data = head->data;
+    newNodePtr->previous = head->previous;
 
     head.data = data;
-    head.previous = newNodePtr;
+    head->previous = newNodePtr;
 
     curSize++;
 }
@@ -34,18 +34,19 @@ void Stack<T>::pop () {
     }
     if (size()==1) {
         head.data = 0;
-        head.previous = nullptr;
+        head->previous = nullptr;
         curSize--;
         return;
     }
-    node* toDelete = &head;
-    head.previous = head.previous->previous;
-    head.data = head.previous->data;
-    delete toDelete;;
+    Node* toDelete = head->previous;
+    T oldData = head->previous->data;
+    head->previous = head->previous->previous;
+    head->data = oldData;
+    delete toDelete;
 }
 template<typename T>
 T Stack<T>::top() const {
-    return head.data;
+    return head->data;
 }
 template<typename T>
 int Stack<T>::size() const {
@@ -62,5 +63,7 @@ Stack<T>::~Stack() {
         pop();
     }
 }
+
+
 
 

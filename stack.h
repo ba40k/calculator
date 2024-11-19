@@ -12,7 +12,7 @@ private:
         Node* previous;
     };
     int curSize;
-    Node head;
+    Node* head;
 public:
     Stack();
     void push(T data);
