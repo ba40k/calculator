@@ -12,6 +12,14 @@ Stack<T>::Stack() {
 
 template<typename T>
 void Stack<T>::push(T data) {
+    node* newNodePtr = new node;
+    newNodePtr->data = head.data;
+    newNodePtr->previous = head.previous;
 
+    head.data = data;
+    head.previous = newNodePtr;
+
+    curSize++;
 }
+
 
