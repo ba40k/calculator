@@ -6,6 +6,7 @@
 #include <array>
 #include <array>
 #include <array>
+#include <array>
 #include <compare>
 
 template<typename T>
@@ -36,7 +37,13 @@ void Stack<T>::push(T data) {
     push(data);
 }
 
-
+template<typename T>
+void Stack<T>::pop() {
+    if (curSize ==0) {
+        throw "Stack is empty";
+    }
+    curSize--;
+}
 
 template<typename T>
 Stack<T>::~Stack() {
