@@ -5,6 +5,7 @@
 
 #include <array>
 #include <array>
+#include <array>
 #include <compare>
 
 template<typename T>
@@ -23,6 +24,18 @@ void Stack<T>::reallocate() {
     }
     delete[] array;
 }
+
+template<typename T>
+void Stack<T>::push(T data) {
+    if (curSize < capacity) {
+        array[curSize] = data;
+        curSize++;
+        return ;
+    }
+    reallocate();
+    push(data);
+}
+
 
 
 template<typename T>

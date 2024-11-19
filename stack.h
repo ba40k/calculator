@@ -19,7 +19,7 @@ public:
     bool empty() const;
     void pop();
     int size()const;
-    int capacity const;
+    int capacity() const;
     ~Stack();
 };
 #endif //STACK_H
