@@ -56,4 +56,11 @@ template<typename T>
 bool Stack<T>::empty() const {
     return (curSize==0);
 }
+template<typename T>
+Stack<T>::~Stack() {
+    while(size()!=0) {
+        pop();
+    }
+}
+
 

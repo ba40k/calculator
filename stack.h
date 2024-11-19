@@ -20,7 +20,6 @@ public:
     bool empty() const;
     void pop();
     int size()const;
-
-
+    ~Stack();
 };
 #endif //STACK_H
