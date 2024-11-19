@@ -7,12 +7,11 @@
 template<typename  T>
 class Stack {
 private:
-    struct Node {
-        T data;
-        Node* previous;
-    };
+    T* array;
     int curSize;
-    Node* head;
+    int curCapacity;
+    const int INITIAL_CAPACITY = 16;
+    void reallocate();
 public:
     Stack();
     void push(T data);
@@ -20,6 +19,7 @@ public:
     bool empty() const;
     void pop();
     int size()const;
+    int capacity const;
     ~Stack();
 };
 #endif //STACK_H
