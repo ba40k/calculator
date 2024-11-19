@@ -52,4 +52,8 @@ int Stack<T>::size() const {
     return curSize;
 }
 
+template<typename T>
+bool Stack<T>::empty() const {
+    return (curSize==0);
+}
 
