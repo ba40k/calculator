@@ -44,6 +44,7 @@ void Stack<T>::pop () {
     head->previous = head->previous->previous;
     head->data = oldData;
     delete toDelete;
+    curSize--;
 }
 template<typename T>
 T Stack<T>::top() const {
