@@ -5,6 +5,7 @@
 
 template<typename T>
 Stack<T>::Stack() {
+    head = new Node();
     head->data=0;
     head->previous=nullptr;
     curSize=0;
@@ -21,7 +22,7 @@ void Stack<T>::push(T data) {
     newNodePtr->data = head->data;
     newNodePtr->previous = head->previous;
 
-    head.data = data;
+    head->data = data;
     head->previous = newNodePtr;
 
     curSize++;
@@ -33,7 +34,7 @@ void Stack<T>::pop () {
         throw "Stack is empty";
     }
     if (size()==1) {
-        head.data = 0;
+        head->data = 0;
         head->previous = nullptr;
         curSize--;
         return;
