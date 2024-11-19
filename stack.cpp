@@ -43,5 +43,10 @@ void Stack<T>::pop () {
     head.data = head.previous->data;
     delete toDelete;;
 }
+template<typename T>
+T Stack<T>::top() const {
+    return head.data;
+}
+
 
 
