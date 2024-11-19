@@ -2,70 +2,76 @@
 // Created by radamir on 19.11.24.
 //
 #include "stack.h"
+#include <iostream>
+#include <array>
+#include <array>
+#include <array>
+#include <array>
+#include <array>
+#include <array>
+#include <compare>
 
 template<typename T>
 Stack<T>::Stack() {
-    head = new Node();
-    head->data=0;
-    head->previous=nullptr;
-    curSize=0;
+    curCapacity = INITIAL_CAPACITY;
+    array = new T[curCapacity];
+    curSize =0;
+}
+
+template<typename T>
+void Stack<T>::reallocate() {
+    curCapacity*=2;
+    T* newArray = new T[curCapacity];
+    for (int i =0;i<curSize;i++) {
+        newArray[i] = array[i];
+    }
+    delete[] array;
+    array = newArray;
 }
 
 template<typename T>
 void Stack<T>::push(T data) {
-    if(size()==0) {
-        head->data=data;
-        curSize=1;
-        return;
+    if (curSize < curCapacity) {
+        array[curSize] = data;
+        curSize++;
+        return ;
     }
-    Node* newNodePtr = new Node;
-    newNodePtr->data = head->data;
-    newNodePtr->previous = head->previous;
-
-    head->data = data;
-    head->previous = newNodePtr;
-
-    curSize++;
+    reallocate();
+    push(data);
 }
 
 template<typename T>
-void Stack<T>::pop () {
-    if (size()==0) {
-        throw "Stack is empty";
+void Stack<T>::pop() {
+    if (curSize ==0) {
+        std::cerr<<"Stack is empty"<<std::endl;
+        std::exit(EXIT_FAILURE);
     }
-    if (size()==1) {
-        head->data = 0;
-        head->previous = nullptr;
-        curSize--;
-        return;
-    }
-    Node* toDelete = head->previous;
-    T oldData = head->previous->data;
-    head->previous = head->previous->previous;
-    head->data = oldData;
-    delete toDelete;
     curSize--;
 }
 template<typename T>
-T Stack<T>::top() const {
-    return head->data;
+bool Stack<T>::empty() const {
+    return (curSize == 0);
 }
+
+template<typename T>
+int Stack<T>::capacity() const {
+    return curCapacity;
+}
+
 template<typename T>
 int Stack<T>::size() const {
     return curSize;
 }
 
 template<typename T>
-bool Stack<T>::empty() const {
-    return (curSize==0);
+T Stack<T>::top() const {
+    if (curSize == 0) {
+        std::cerr<<"Stack is empty"<<std::endl;
+        std::exit(EXIT_FAILURE);
+    }
+    return array[curSize-1];
 }
 template<typename T>
 Stack<T>::~Stack() {
-    while(size()!=0) {
-        pop();
-    }
+    delete[] array;
 }
-
-
-
-
