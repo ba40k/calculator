@@ -2,7 +2,7 @@
 // Created by radamir on 19.11.24.
 //
 #include "stack.h"
-
+#include <iostream>
 #include <array>
 #include <array>
 #include <array>
@@ -26,11 +26,12 @@ void Stack<T>::reallocate() {
         newArray[i] = array[i];
     }
     delete[] array;
+    array = newArray;
 }
 
 template<typename T>
 void Stack<T>::push(T data) {
-    if (curSize < capacity) {
+    if (curSize < curCapacity) {
         array[curSize] = data;
         curSize++;
         return ;
@@ -42,7 +43,8 @@ void Stack<T>::push(T data) {
 template<typename T>
 void Stack<T>::pop() {
     if (curSize ==0) {
-        throw "Stack is empty";
+        std::cerr<<"Stack is empty"<<std::endl;
+        std::exit(EXIT_FAILURE);
     }
     curSize--;
 }
@@ -64,15 +66,12 @@ int Stack<T>::size() const {
 template<typename T>
 T Stack<T>::top() const {
     if (curSize == 0) {
-        throw "Stack is empty";
+        std::cerr<<"Stack is empty"<<std::endl;
+        std::exit(EXIT_FAILURE);
     }
     return array[curSize-1];
 }
-
-
-
 template<typename T>
 Stack<T>::~Stack() {
     delete[] array;
 }
-
