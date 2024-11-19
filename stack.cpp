@@ -7,6 +7,8 @@
 #include <array>
 #include <array>
 #include <array>
+#include <array>
+#include <array>
 #include <compare>
 
 template<typename T>
@@ -44,6 +46,30 @@ void Stack<T>::pop() {
     }
     curSize--;
 }
+template<typename T>
+bool Stack<T>::empty() const {
+    return (curSize == 0);
+}
+
+template<typename T>
+int Stack<T>::capacity() const {
+    return curCapacity;
+}
+
+template<typename T>
+int Stack<T>::size() const {
+    return curSize;
+}
+
+template<typename T>
+T Stack<T>::top() const {
+    if (curSize == 0) {
+        throw "Stack is empty";
+    }
+    return array[curSize-1];
+}
+
+
 
 template<typename T>
 Stack<T>::~Stack() {
