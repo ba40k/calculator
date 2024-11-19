@@ -47,6 +47,9 @@ template<typename T>
 T Stack<T>::top() const {
     return head.data;
 }
-
+template<typename T>
+int Stack<T>::size() const {
+    return curSize;
+}
 
 
