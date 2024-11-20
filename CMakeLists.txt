@@ -7,4 +7,8 @@ add_executable(calculator main.cpp
         stack.h
         calculator.cpp
         calculator.h
+        expression.cpp
+        expression.h
+        cmake-build-debug/AtomicExpression.cpp
+        cmake-build-debug/AtomicExpression.h
 )
