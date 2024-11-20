@@ -3,3 +3,26 @@
 //
 
 #include "AtomicExpression.h"
+
+#include <cstring>
+
+Number::Number(char *str): AtomicExpression() {
+    const long long num=atoll(str);
+    value=num;
+}
+long double Number::getValue() const {
+    return value;
+}
+Operation::Operation(std::function<long double(long double, long double)> _operation) : AtomicExpression() {
+    operation = _operation;
+}
+long double Operation::makeOperation(Number l, Number r) {
+    return operation(l.getValue(),r.getValue());
+}
+Bracket::Bracket(char _bracket) : AtomicExpression() {
+    bracket=bracket;
+}
+char Bracket::bracketType() {
+    return bracket;
+}
+
