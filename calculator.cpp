@@ -3,34 +3,64 @@
 //
 
 #include "calculator.h"
-calculator::calculator() {
-    operations = new char[5];
-    operations[0] = '+';
-    operations[1] = '-';
-    operations[2] = '*';
-    operations[3] = '/';
-    operations[4] = '^';
-}
-calculator::~calculator() {
-    delete[] operations;
-    operations = nullptr;
-}
+#include "stack.h"
+long double calculator::calculate(expression &expr) {
+    long double res=0;
+    int curSize = expr.size();
+    Stack<Number> stackForNumbers;
+    Stack<AtomicExpression*> stackForBracetsAndOperations;
 
-bool calculator::isCorrect(std::string &expression) const{
-    int balance =0;
-    for (int i =0;i<expression.size();i++) {
-        if(expression[i] == '(') {
-            balance++;
+    stackForBracetsAndOperations<<(new Bracket('('));
+
+    for (int i =0;i<curSize;i++) {
+        if (dynamic_cast<Number*>(expr[i])) {
+            stackForNumbers<<(*dynamic_cast<Number*>(expr[i]));
         }
-        if (expression[i] == ')') {
-            balance--;
-            if (balance <0) {
-                return false;
+        if (dynamic_cast<Bracket*>(expr[i])) {
+            char bracketType = dynamic_cast<Bracket*>(expr[i])->bracketType();
+            if (bracketType == '(') {
+                stackForBracetsAndOperations<<(expr[i]);
+            }
+            else {
+                while (!(dynamic_cast<Bracket*>(stackForBracetsAndOperations.top()) &&
+                         dynamic_cast<Bracket*>(stackForBracetsAndOperations.top())->bracketType() == '(')) {
+                    long double r = stackForNumbers.top().getValue();
+                    stackForNumbers>>(1);
+                    long double l = stackForNumbers.top().getValue();
+                    stackForNumbers>>(1);
+
+                    stackForNumbers<<Number(dynamic_cast<Operation*>(stackForBracetsAndOperations.top())->makeOperation(l,r));
+                    stackForBracetsAndOperations>>(1);
+
+                }
+                stackForBracetsAndOperations>>(1);
             }
         }
-    }
-    for (int i =0;i<expression.size();i++) {
+        if (dynamic_cast<Operation*>(expr[i])) {
+            int currentPriority = dynamic_cast<Operation*>(expr[i])->getPriority();
+            while (stackForBracetsAndOperations.size()>0 && dynamic_cast<Operation*>(stackForBracetsAndOperations.top()) &&
+                   dynamic_cast<Operation*>(stackForBracetsAndOperations.top())->getPriority() >= currentPriority){
+                        long double r = stackForNumbers.top().getValue();
+                        stackForNumbers>>(1);
+                        long double l = stackForNumbers.top().getValue();
+                        stackForNumbers>>(1);
 
+                        stackForNumbers<<Number(dynamic_cast<Operation*>(stackForBracetsAndOperations.top())->makeOperation(l,r));
+                        stackForBracetsAndOperations>>(1);
+                   }
+            stackForBracetsAndOperations<<(expr[i]);
+           // std::cout<<dynamic_cast<Operation*>(expr[i])->getPriority()<<'\n';
+        }
     }
+    while (!(dynamic_cast<Bracket*>(stackForBracetsAndOperations.top()) &&
+                        dynamic_cast<Bracket*>(stackForBracetsAndOperations.top())->bracketType() == '(')) {
+        long double r = stackForNumbers.top().getValue();
+        stackForNumbers>>(1);
+        long double l = stackForNumbers.top().getValue();
+        stackForNumbers>>(1);
 
+        res += dynamic_cast<Operation*>(stackForBracetsAndOperations.top())->makeOperation(l,r);
+        stackForBracetsAndOperations>>(1);
+    }
+    return res;
 }

@@ -11,6 +11,4 @@ add_executable(calculator main.cpp
         expression.h
         cmake-build-debug/AtomicExpression.cpp
         cmake-build-debug/AtomicExpression.h
-        OperationFunctions.cpp
-        OperationFunctions.h
 )

@@ -3,59 +3,114 @@
 //
 
 #include "expression.h"
-
+#include "stack.h"
 #include <cstring>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <utility>
+#include <math.h>
+#include <ostream>
+
 expression::expression(std::string &str) {
-    isHaveUnidentified=0;
-    std::vector<std::pair<long double, int>> numbers;
-    std::vector<std::pair<char, int>> operations;
-    std::vector<std::pair<char, int>> brackets;
-    int identifiedSize=0;
-    for (int i =0;i<str.size();i++) {
-            if (str[i] == '(' || str[i]==')') {
-                brackets.push_back({str[i],identifiedSize});
-                ++identifiedSize;
-            }
-    }
-
-    for (int i =0;i<str.size();i++) {
-        if (str[i] == '+' || str[i]=='-' || str[i]=='*'
-            || str[i]=='/' || str[i]=='^') {
-            operations.push_back({str[i],identifiedSize});
-            ++identifiedSize;
-        }
-    }
-
+    isHaveUnidentified=false;
+    std::vector<std::string> tokens;
     std::string buf;
-
-    for (int i =0; i<str.size();i++) {
+    for (int i = 0; i < str.size(); i++) {
         if ((str[i]>='0' && str[i]<='9') || str[i]=='.') {
-            buf+=str[i];
-            ++identifiedSize;
+            buf += str[i];
+            if (i == str.size() - 1) {
+                tokens.push_back(buf);
+            }
+            else {
+                if (!((str[i+1]>='0' && str[i+1]<='9') || str[i+1]=='.')) {
+                    tokens.push_back(buf);
+                    buf.clear();
+                }
+            }
+            continue;
         }
-        else {
-            long double number = stold(buf);
-            numbers.push_back({number,identifiedSize});
-            buf.clear();
+        if (str[i]=='+' || str[i]=='-' || str[i]=='*' || str[i]=='/'
+            || str[i]=='^' || str[i] == '(' || str[i] == ')') {
+            std::string token;
+            token+=str[i];
+            tokens.push_back(token);
+            continue;
         }
-    }
-
-    if (identifiedSize!=str.size()) {
         isHaveUnidentified=1;
     }
-    int expressionSize=0;
-    expressionSize += numbers.size();
-    expressionSize += operations.size();
-    expressionSize += brackets.size();
-    expr = new AtomicExpression*[expressionSize];
-    for (int i =0;i<numbers.size();i++) {
-        expr[numbers[i].second] = new Number(numbers[i].first);
+    expr = new AtomicExpression*[tokens.size()];
+    for (int i = 0; i < tokens.size(); i++) {
+        if (tokens[i]=="(" || tokens[i]==")") {
+            expr[i] = new Bracket(tokens[i][0]);
+            continue;
+        }
+        if (tokens[i][0] == '+') {
+            expr[i] = new Operation([](long double a, long double b) {return a+b;},0);
+        }
+        if (tokens[i][0] == '-') {
+            expr[i] = new Operation([](long double a, long double b) {return a-b;},0);
+        }
+        if (tokens[i][0] == '*') {
+            expr[i] = new Operation([](long double a, long double b) {return a*b;},1);
+        }
+        if (tokens[i][0] == '/') {
+            expr[i] = new Operation([](long double a, long double b) {return a/b;},1);
+        }
+        if (tokens[i][0] == '^') {
+            expr[i] = new Operation([](long double a, long double b) {return std::pow(a, b);},1);
+        }
+        if (tokens[i][0]>='0' && tokens[i][0]<='9') {
+            expr[i] = new Number(stold(tokens[i]));
+        }
     }
-    for (int i =0;i<operations.size();i++) {
-
+    curSize = tokens.size();
+    if (isHaveUnidentified) {
+        std::cerr<<"Unidentified expression"<<std::endl;
+        std::exit(EXIT_FAILURE);
     }
+}
 
+int expression::size() const {
+    return curSize;
+}
+bool expression::isCorrect() {
+    int balance=0;
+    for (int i = 0; i < curSize; i++) {
+        if (dynamic_cast<Bracket*>(expr[i])) {
+            auto b = dynamic_cast<Bracket*>(expr[i]);
+            if (b->bracketType()==')') {
+                --balance;
+            }
+            else {
+                ++balance;
+            }
+            if (balance<0) {
+                return false;
+            }
+        }
+    }
+    for (int i=0;i<curSize;i++) {
+        if ((i==0 || i == curSize-1) && dynamic_cast<Operation*>(expr[i])) {
+            return false;
+        }
+
+        if (dynamic_cast<Operation*>(expr[i])) {
+            bool temp = (dynamic_cast<Number*>(expr[i-1]))&&(dynamic_cast<Number*>(expr[i+1]));
+            if (!temp) return false;
+        }
+    }
+    return true;
+}
+expression::~expression() {
+    for (int i = 0; i < curSize; i++) {
+        delete expr[i];
+    }
+    delete [] expr;
+}
+
+
+
+AtomicExpression* expression::operator[](int i) {
+    return expr[i];
 }
