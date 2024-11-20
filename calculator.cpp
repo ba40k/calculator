@@ -30,7 +30,7 @@ bool calculator::isCorrect(std::string &expression) const{
         }
     }
     for (int i =0;i<expression.size();i++) {
-         if(expression[i] == '+') {
+
     }
 
 }

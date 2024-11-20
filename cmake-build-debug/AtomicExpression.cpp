@@ -4,11 +4,13 @@
 
 #include "AtomicExpression.h"
 
-#include <cstring>
 
-Number::Number(char *str): AtomicExpression() {
-    const long long num=atoll(str);
+Number::Number(std::string &str): AtomicExpression() {
+    const long double num=stold(str);
     value=num;
+}
+Number::Number(long double _val): AtomicExpression() {
+    value=_val;
 }
 long double Number::getValue() const {
     return value;

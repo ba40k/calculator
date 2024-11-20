@@ -5,18 +5,19 @@
 #ifndef ATOMICEXPRESSION_H
 #define ATOMICEXPRESSION_H
 #include <functional>
-
+#include <string>
 
 class AtomicExpression {
 public:
-    AtomicExpression() = delete;
+    AtomicExpression() = default;
     ~AtomicExpression() = default;
 };
 class Number : public AtomicExpression {
 private:
     long double value;
 public:
-    Number(char* str);
+    Number(std::string &str);
+    Number(long double _val);
     long double getValue() const;
 
 };
