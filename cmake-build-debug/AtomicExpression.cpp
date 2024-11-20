@@ -5,24 +5,27 @@
 #include "AtomicExpression.h"
 
 
-Number::Number(std::string &str): AtomicExpression() {
+Number::Number(std::string &str): AtomicExpression("Number") {
     const long double num=stold(str);
     value=num;
 }
-Number::Number(long double _val): AtomicExpression() {
+Number::Number(long double _val): AtomicExpression("Number") {
     value=_val;
 }
 long double Number::getValue() const {
     return value;
 }
-Operation::Operation(std::function<long double(long double, long double)> _operation) : AtomicExpression() {
-    operation = _operation;
-}
+Operation::Operation(std::function<long double(long double, long double)> _operation,int _priority) : AtomicExpression("Operation"), operation(_operation) ,
+                                                                                        priority(_priority){}
 long double Operation::makeOperation(Number l, Number r) {
     return operation(l.getValue(),r.getValue());
 }
-Bracket::Bracket(char _bracket) : AtomicExpression() {
-    bracket=bracket;
+int Operation::getPriority()  {
+    return priority;
+}
+
+Bracket::Bracket(char _bracket) : AtomicExpression("Bracket") {
+    bracket=_bracket;
 }
 char Bracket::bracketType() {
     return bracket;
