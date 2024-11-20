@@ -10,6 +10,15 @@
 class AtomicExpression {
 
 };
+class Number : public AtomicExpression {
+
+};
+class Operation : public AtomicExpression {
+
+};
+class Bracket : public AtomicExpression {
+
+};
 
 
 
