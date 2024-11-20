@@ -55,8 +55,26 @@ build CMakeFiles/calculator.dir/main.cpp.o: CXX_COMPILER__calculator_unscanned_D
   OBJECT_DIR = CMakeFiles/calculator.dir
   OBJECT_FILE_DIR = CMakeFiles/calculator.dir
 
-build CMakeFiles/calculator.dir/stack.cpp.o: CXX_COMPILER__calculator_unscanned_Debug /home/radamir/CLionProjects/calculator/stack.cpp || cmake_object_order_depends_target_calculator
-  DEP_FILE = CMakeFiles/calculator.dir/stack.cpp.o.d
+build CMakeFiles/calculator.dir/calculator.cpp.o: CXX_COMPILER__calculator_unscanned_Debug /home/radamir/CLionProjects/calculator/calculator.cpp || cmake_object_order_depends_target_calculator
+  DEP_FILE = CMakeFiles/calculator.dir/calculator.cpp.o.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/calculator.dir
+  OBJECT_FILE_DIR = CMakeFiles/calculator.dir
+
+build CMakeFiles/calculator.dir/expression.cpp.o: CXX_COMPILER__calculator_unscanned_Debug /home/radamir/CLionProjects/calculator/expression.cpp || cmake_object_order_depends_target_calculator
+  DEP_FILE = CMakeFiles/calculator.dir/expression.cpp.o.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/calculator.dir
+  OBJECT_FILE_DIR = CMakeFiles/calculator.dir
+
+build CMakeFiles/calculator.dir/AtomicExpression.cpp.o: CXX_COMPILER__calculator_unscanned_Debug /home/radamir/CLionProjects/calculator/cmake-build-debug/AtomicExpression.cpp || cmake_object_order_depends_target_calculator
+  DEP_FILE = CMakeFiles/calculator.dir/AtomicExpression.cpp.o.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/calculator.dir
+  OBJECT_FILE_DIR = CMakeFiles/calculator.dir
+
+build CMakeFiles/calculator.dir/OperationFunctions.cpp.o: CXX_COMPILER__calculator_unscanned_Debug /home/radamir/CLionProjects/calculator/OperationFunctions.cpp || cmake_object_order_depends_target_calculator
+  DEP_FILE = CMakeFiles/calculator.dir/OperationFunctions.cpp.o.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/calculator.dir
   OBJECT_FILE_DIR = CMakeFiles/calculator.dir
@@ -69,7 +87,7 @@ build CMakeFiles/calculator.dir/stack.cpp.o: CXX_COMPILER__calculator_unscanned_
 #############################################
 # Link the executable calculator
 
-build calculator: CXX_EXECUTABLE_LINKER__calculator_Debug CMakeFiles/calculator.dir/main.cpp.o CMakeFiles/calculator.dir/stack.cpp.o
+build calculator: CXX_EXECUTABLE_LINKER__calculator_Debug CMakeFiles/calculator.dir/main.cpp.o CMakeFiles/calculator.dir/calculator.cpp.o CMakeFiles/calculator.dir/expression.cpp.o CMakeFiles/calculator.dir/AtomicExpression.cpp.o CMakeFiles/calculator.dir/OperationFunctions.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/calculator.dir
   POST_BUILD = :
