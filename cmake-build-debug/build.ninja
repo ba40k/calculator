@@ -67,7 +67,7 @@ build CMakeFiles/calculator.dir/expression.cpp.o: CXX_COMPILER__calculator_unsca
   OBJECT_DIR = CMakeFiles/calculator.dir
   OBJECT_FILE_DIR = CMakeFiles/calculator.dir
 
-build CMakeFiles/calculator.dir/AtomicExpression.cpp.o: CXX_COMPILER__calculator_unscanned_Debug /home/radamir/CLionProjects/calculator/cmake-build-debug/AtomicExpression.cpp || cmake_object_order_depends_target_calculator
+build CMakeFiles/calculator.dir/AtomicExpression.cpp.o: CXX_COMPILER__calculator_unscanned_Debug /home/radamir/CLionProjects/calculator/AtomicExpression.cpp || cmake_object_order_depends_target_calculator
   DEP_FILE = CMakeFiles/calculator.dir/AtomicExpression.cpp.o.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/calculator.dir

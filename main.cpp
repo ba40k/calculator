@@ -3,8 +3,8 @@
 #include <iostream>
 
 #include "calculator.h"
-#include "cmake-build-debug/AtomicExpression.h"
-#include "cmake-build-debug/AtomicExpression.h"
+#include "AtomicExpression.h"
+#include "AtomicExpression.h"
 #include "expression.h"
 int main() {
     std::string input;

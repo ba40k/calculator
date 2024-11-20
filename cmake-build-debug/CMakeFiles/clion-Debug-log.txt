@@ -2,3 +2,4 @@
 -- Configuring done (0.0s)
 -- Generating done (0.0s)
 -- Build files have been written to: /home/radamir/CLionProjects/calculator/cmake-build-debug
+CMake File API: /home/radamir/CLionProjects/calculator/cmake-build-debug: failed to load from '/home/radamir/CLionProjects/calculator/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-30a716095c1e901fe533.json'

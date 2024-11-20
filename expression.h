@@ -4,7 +4,7 @@
 
 #ifndef EXPRESSION_H
 #define EXPRESSION_H
-#include "cmake-build-debug/AtomicExpression.h"
+#include "AtomicExpression.h"
 #include <string>
 
 
