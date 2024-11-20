@@ -3,9 +3,22 @@
 //
 
 #include "calculator.h"
-bool calculator::isCorrect(std::string &expression) {
+calculator::calculator() {
+    operations = new char[5];
+    operations[0] = '+';
+    operations[1] = '-';
+    operations[2] = '*';
+    operations[3] = '/';
+    operations[4] = '^';
+}
+calculator::~calculator() {
+    delete[] operations;
+    operations = nullptr;
+}
+
+bool calculator::isCorrect(std::string &expression) const{
     int balance =0;
-    for (int i =0;i<expression.length();i++) {
+    for (int i =0;i<expression.size();i++) {
         if(expression[i] == '(') {
             balance++;
         }
@@ -16,6 +29,8 @@ bool calculator::isCorrect(std::string &expression) {
             }
         }
     }
+    for (int i =0;i<expression.size();i++) {
 
+    }
 
 }

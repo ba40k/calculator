@@ -9,12 +9,12 @@
 
 class calculator {
 private:
-
+     char* operations;
 public:
-    calculator() = default;
-    bool isCorrect(std::string &expression);
+    calculator();
+    bool isCorrect(std::string &expression) const;
     long double calculate(std::string &expression);
-    ~calculator() = default;
+    ~calculator();
 };
 
 
