@@ -5,10 +5,10 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(calculator main.cpp
         stack.h
-        calculator.cpp
-        calculator.h
-        expression.cpp
-        expression.h
+        Calculator.cpp
+        Calculator.h
+        Expression.cpp
+        Expression.h
         AtomicExpression.cpp
         AtomicExpression.h
 )

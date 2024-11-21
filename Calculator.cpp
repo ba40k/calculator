@@ -2,9 +2,14 @@
 // Created by radamir on 20.11.24.
 //
 
-#include "calculator.h"
+#include "Calculator.h"
 #include "stack.h"
-long double calculator::calculate(expression &expr) {
+long double Calculator::calculate(std::string &stringExpression) {
+    Expression expr(stringExpression);
+    if (!expr.isCorrect()) {
+        std::cerr << "Invalid expression: " << stringExpression << std::endl;
+        std::exit(EXIT_FAILURE);
+    }
     long double res=0;
     int curSize = expr.size();
     Stack<Number> stackForNumbers;
@@ -61,6 +66,10 @@ long double calculator::calculate(expression &expr) {
 
         res += dynamic_cast<Operation*>(stackForBracetsAndOperations.top())->makeOperation(l,r);
         stackForBracetsAndOperations>>(1);
+    }
+    while (!stackForNumbers.empty()) {
+        res+=stackForNumbers.top().getValue();
+        stackForNumbers>>(1);
     }
     return res;
 }

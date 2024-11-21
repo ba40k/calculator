@@ -8,16 +8,16 @@
 #include <string>
 
 
-class expression {
+class Expression {
     AtomicExpression** expr;
     bool isHaveUnidentified;
     int curSize;
 public:
-    expression(std::string &str);
+    Expression(std::string &str);
     bool isCorrect();
     AtomicExpression* operator[](int i);
     int size() const;
-    ~expression();
+    ~Expression();
 };
 
 

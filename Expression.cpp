@@ -2,7 +2,7 @@
 // Created by radamir on 20.11.24.
 //
 
-#include "expression.h"
+#include "Expression.h"
 #include "stack.h"
 #include <cstring>
 #include <iostream>
@@ -12,7 +12,7 @@
 #include <math.h>
 #include <ostream>
 
-expression::expression(std::string &str) {
+Expression::Expression(std::string &str) {
     isHaveUnidentified=false;
     std::vector<std::string> tokens;
     std::string buf;
@@ -71,10 +71,10 @@ expression::expression(std::string &str) {
     }
 }
 
-int expression::size() const {
+int Expression::size() const {
     return curSize;
 }
-bool expression::isCorrect() {
+bool Expression::isCorrect() {
     int balance=0;
     for (int i = 0; i < curSize; i++) {
         if (dynamic_cast<Bracket*>(expr[i])) {
@@ -102,7 +102,7 @@ bool expression::isCorrect() {
     }
     return true;
 }
-expression::~expression() {
+Expression::~Expression() {
     for (int i = 0; i < curSize; i++) {
         delete expr[i];
     }
@@ -111,6 +111,6 @@ expression::~expression() {
 
 
 
-AtomicExpression* expression::operator[](int i) {
+AtomicExpression* Expression::operator[](int i) {
     return expr[i];
 }

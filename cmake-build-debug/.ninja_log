@@ -1,14 +1,13 @@
 # ninja log v6
-1	910	1732121322969371632	CMakeFiles/calculator.dir/expression.cpp.o	263424e2c93b158b
-1	693	1732121322969371632	CMakeFiles/calculator.dir/calculator.cpp.o	59610647beb8dec6
-0	24	1732121438887094289	build.ninja	fa5ac841498681e2
-0	632	1732121322968371617	CMakeFiles/calculator.dir/main.cpp.o	b54b69d22b3495e5
-2	572	1732121322970371646	CMakeFiles/calculator.dir/AtomicExpression.cpp.o	880bb6244f795e76
+702	773	1732212197623102271	calculator	bf1ba7f7b231361d
 2	411	1732040284957070352	CMakeFiles/calculator.dir/stack.cpp.o	3f67dc7f1432a99
-910	982	1732121323878384772	calculator	bf1ba7f7b231361d
-0	24	1732121438887094289	build.ninja	fa5ac841498681e2
 2	580	1732121438897094442	CMakeFiles/calculator.dir/AtomicExpression.cpp.o	4c02161a1544d364
-1	610	1732121438896094426	CMakeFiles/calculator.dir/main.cpp.o	b54b69d22b3495e5
-2	702	1732121438897094442	CMakeFiles/calculator.dir/calculator.cpp.o	59610647beb8dec6
+2	627	1732212035514604512	CMakeFiles/calculator.dir/main.cpp.o	b54b69d22b3495e5
+0	24	1732212440931635956	build.ninja	fa5ac841498681e2
+2	702	1732212196922933938	CMakeFiles/calculator.dir/calculator.cpp.o	59610647beb8dec6
 2	952	1732121438897094442	CMakeFiles/calculator.dir/expression.cpp.o	263424e2c93b158b
-952	1029	1732121439847108924	calculator	bf1ba7f7b231361d
+0	31	1732212440931635956	build.ninja	fa5ac841498681e2
+3	954	1732212440941637038	CMakeFiles/calculator.dir/Expression.cpp.o	6017eecca4f81ef2
+1	629	1732212457660419323	CMakeFiles/calculator.dir/main.cpp.o	b54b69d22b3495e5
+2	711	1732212457660419323	CMakeFiles/calculator.dir/Calculator.cpp.o	2784e157de874da1
+711	791	1732212458369493893	calculator	8aaf85d4315ca34e

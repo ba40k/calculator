@@ -2,14 +2,9 @@
 
 #include <iostream>
 
-#include "calculator.h"
-#include "AtomicExpression.h"
-#include "AtomicExpression.h"
-#include "expression.h"
+#include "Calculator.h"
 int main() {
     std::string input;
     std::cin >> input;
-    calculator calculatorDevice;
-    expression formula(input);
-    std::cout<<calculatorDevice.calculate(formula);
+    std::cout<<Calculator::calculate(input);
 }
