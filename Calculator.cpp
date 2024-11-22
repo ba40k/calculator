@@ -4,6 +4,33 @@
 
 #include "Calculator.h"
 #include "stack.h"
+#include <math.h>
+void Calculator::appOperation(std::string operationNotation,
+                              std::function<long double(long double, long double)> operationLogic,
+                              std::function<bool(long double, long double)> isAbleChecker, int priority) {
+    Operation::defineOperation(operationNotation, operationLogic, isAbleChecker, priority);
+
+}
+void Calculator::removeOperation(std::string operationNotation) {
+    Operation::removeOperation(operationNotation);
+}
+Calculator::Calculator() {
+    Operation::defineOperation("+",[](long double a, long double b){return a + b;},
+                                [](long double a, long double b){return true;},0);
+
+    Operation::defineOperation("-",[](long double a, long double b){return a - b;},
+                                [](long double a, long double b){return true;},0);
+
+    Operation::defineOperation("/",[](long double a, long double b){return a / b;},
+                                [](long double a, long double b){return b!=0;},0);
+
+    Operation::defineOperation("*",[](long double a, long double b){return a + b;},
+                                [](long double a, long double b){return true;},0);
+
+    Operation::defineOperation("^",[](long double a, long double b){return std::pow(a,b);},
+                                [](long double a, long double b){return (!(a==0 && b<0));},0);
+}
+
 long double Calculator::calculate(std::string &stringExpression) {
     Expression expr(stringExpression);
     if (!expr.isCorrect()) {
@@ -49,7 +76,10 @@ long double Calculator::calculate(std::string &stringExpression) {
                         stackForNumbers>>(1);
                         long double l = stackForNumbers.top().getValue();
                         stackForNumbers>>(1);
-
+                        if (!dynamic_cast<Operation*>(stackForBracetsAndOperations.top())->checkIsAbleToMakeOperation(l,r)) {
+                            std::cerr<<"Invalid operation: "<<std::endl;
+                            std::exit(EXIT_FAILURE);
+                        }
                         stackForNumbers<<Number(dynamic_cast<Operation*>(stackForBracetsAndOperations.top())->makeOperation(l,r));
                         stackForBracetsAndOperations>>(1);
                    }
@@ -63,7 +93,10 @@ long double Calculator::calculate(std::string &stringExpression) {
         stackForNumbers>>(1);
         long double l = stackForNumbers.top().getValue();
         stackForNumbers>>(1);
-
+        if (!dynamic_cast<Operation*>(stackForBracetsAndOperations.top())->checkIsAbleToMakeOperation(l,r)) {
+            std::cerr<<"Invalid operation: "<<std::endl;
+            std::exit(EXIT_FAILURE);
+        }
         res += dynamic_cast<Operation*>(stackForBracetsAndOperations.top())->makeOperation(l,r);
         stackForBracetsAndOperations>>(1);
     }

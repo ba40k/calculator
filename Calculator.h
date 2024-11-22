@@ -9,10 +9,14 @@
 
 class Calculator {
 public:
-    Calculator() = delete;
-
-    static long double calculate(std::string &stringExpression);
-    ~Calculator() = delete;
+    Calculator();
+    void appOperation(std::string operationNotation,
+                      std::function<long double (long double, long double)> operationLogic,
+                      std::function<bool (long double, long double)> isAbleChecker,
+                      int priority);
+    void removeOperation(std::string operationNotation);
+    long double calculate(std::string &stringExpression);
+    ~Calculator() = default;
 };
 
 

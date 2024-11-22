@@ -6,5 +6,6 @@
 int main() {
     std::string input;
     std::cin >> input;
-    std::cout<<Calculator::calculate(input);
+    Calculator calculatorDevice;
+    std::cout<<calculatorDevice.calculate(input);
 }

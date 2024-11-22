@@ -13,6 +13,16 @@
 #include <ostream>
 
 Expression::Expression(std::string &str) {
+
+    std::string addNullsBeforeMinuses;
+    for (auto ch :str) {
+        if (ch == '-') {
+            addNullsBeforeMinuses.push_back('0');
+        }
+        addNullsBeforeMinuses.push_back(ch);
+    }
+    str = addNullsBeforeMinuses;
+
     isHaveUnidentified=false;
     std::vector<std::string> tokens;
     std::string buf;
@@ -45,20 +55,10 @@ Expression::Expression(std::string &str) {
             expr[i] = new Bracket(tokens[i][0]);
             continue;
         }
-        if (tokens[i][0] == '+') {
-            expr[i] = new Operation([](long double a, long double b) {return a+b;},0);
-        }
-        if (tokens[i][0] == '-') {
-            expr[i] = new Operation([](long double a, long double b) {return a-b;},0);
-        }
-        if (tokens[i][0] == '*') {
-            expr[i] = new Operation([](long double a, long double b) {return a*b;},1);
-        }
-        if (tokens[i][0] == '/') {
-            expr[i] = new Operation([](long double a, long double b) {return a/b;},1);
-        }
-        if (tokens[i][0] == '^') {
-            expr[i] = new Operation([](long double a, long double b) {return std::pow(a, b);},1);
+        if (Operation::isDefined(tokens[i])) {
+            expr[i] = new Operation(Operation::getOperation(tokens[i]),
+                                    Operation::getAbleToMakeOperation(tokens[i]),
+                                    Operation::getPriority(tokens[i]));
         }
         if (tokens[i][0]>='0' && tokens[i][0]<='9') {
             expr[i] = new Number(stold(tokens[i]));
