@@ -15,8 +15,9 @@
 Expression::Expression(std::string &str) {
 
     std::string addNullsBeforeMinuses;
-    for (auto ch :str) {
-        if (ch == '-') {
+    for (int i =0;i<str.size();i++) {
+        char ch = str[i];
+        if (ch == '-' && (i==0 || str[i-1] == '(')) {
             addNullsBeforeMinuses.push_back('0');
         }
         addNullsBeforeMinuses.push_back(ch);
@@ -88,16 +89,6 @@ bool Expression::isCorrect() {
             if (balance<0) {
                 return false;
             }
-        }
-    }
-    for (int i=0;i<curSize;i++) {
-        if ((i==0 || i == curSize-1) && dynamic_cast<Operation*>(expr[i])) {
-            return false;
-        }
-
-        if (dynamic_cast<Operation*>(expr[i])) {
-            bool temp = (dynamic_cast<Number*>(expr[i-1]))&&(dynamic_cast<Number*>(expr[i+1]));
-            if (!temp) return false;
         }
     }
     return true;

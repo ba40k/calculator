@@ -22,13 +22,13 @@ Calculator::Calculator() {
                                 [](long double a, long double b){return true;},0);
 
     Operation::defineOperation("/",[](long double a, long double b){return a / b;},
-                                [](long double a, long double b){return b!=0;},0);
+                                [](long double a, long double b){return b!=0;},1);
 
-    Operation::defineOperation("*",[](long double a, long double b){return a + b;},
-                                [](long double a, long double b){return true;},0);
+    Operation::defineOperation("*",[](long double a, long double b){return a * b;},
+                                [](long double a, long double b){return true;},1);
 
     Operation::defineOperation("^",[](long double a, long double b){return std::pow(a,b);},
-                                [](long double a, long double b){return (!(a==0 && b<0));},0);
+                                [](long double a, long double b){return (!(a==0 && b<0));},1);
 }
 
 long double Calculator::calculate(std::string &stringExpression) {
@@ -56,11 +56,19 @@ long double Calculator::calculate(std::string &stringExpression) {
             else {
                 while (!(dynamic_cast<Bracket*>(stackForBracetsAndOperations.top()) &&
                          dynamic_cast<Bracket*>(stackForBracetsAndOperations.top())->bracketType() == '(')) {
+                    if (stackForNumbers.empty()) {
+                        std::cerr << "Incrorrext expression"<<std::endl;
+                        std::exit(EXIT_FAILURE);
+                    }
                     long double r = stackForNumbers.top().getValue();
                     stackForNumbers>>(1);
+                    if (stackForNumbers.empty()) {
+                        std::cerr << "Incrorrext expression"<<std::endl;
+                        std::exit(EXIT_FAILURE);
+                    }
                     long double l = stackForNumbers.top().getValue();
                     stackForNumbers>>(1);
-
+                 //   std::cout<<l<<' '<<r<<' '<<Number(dynamic_cast<Operation*>(stackForBracetsAndOperations.top())->makeOperation(l,r)).getValue()<<'\n';
                     stackForNumbers<<Number(dynamic_cast<Operation*>(stackForBracetsAndOperations.top())->makeOperation(l,r));
                     stackForBracetsAndOperations>>(1);
 
@@ -72,14 +80,23 @@ long double Calculator::calculate(std::string &stringExpression) {
             int currentPriority = dynamic_cast<Operation*>(expr[i])->getPriority();
             while (stackForBracetsAndOperations.size()>0 && dynamic_cast<Operation*>(stackForBracetsAndOperations.top()) &&
                    dynamic_cast<Operation*>(stackForBracetsAndOperations.top())->getPriority() >= currentPriority){
+                   if (stackForNumbers.empty()) {
+                        std::cerr << "Incrorrext expression"<<std::endl;
+                        std::exit(EXIT_FAILURE);
+                        }
                         long double r = stackForNumbers.top().getValue();
                         stackForNumbers>>(1);
+                  if (stackForNumbers.empty()) {
+                        std::cerr << "Incrorrext expression"<<std::endl;
+                        std::exit(EXIT_FAILURE);
+                        }
                         long double l = stackForNumbers.top().getValue();
                         stackForNumbers>>(1);
                         if (!dynamic_cast<Operation*>(stackForBracetsAndOperations.top())->checkIsAbleToMakeOperation(l,r)) {
                             std::cerr<<"Invalid operation: "<<std::endl;
                             std::exit(EXIT_FAILURE);
                         }
+             //   std::cout<<l<<' '<<r<<' '<<Number(dynamic_cast<Operation*>(stackForBracetsAndOperations.top())->makeOperation(l,r)).getValue()<<'\n';
                         stackForNumbers<<Number(dynamic_cast<Operation*>(stackForBracetsAndOperations.top())->makeOperation(l,r));
                         stackForBracetsAndOperations>>(1);
                    }
@@ -89,15 +106,24 @@ long double Calculator::calculate(std::string &stringExpression) {
     }
     while (!(dynamic_cast<Bracket*>(stackForBracetsAndOperations.top()) &&
                         dynamic_cast<Bracket*>(stackForBracetsAndOperations.top())->bracketType() == '(')) {
+        if (stackForNumbers.empty()) {
+            std::cerr << "Incrorrext expression"<<std::endl;
+            std::exit(EXIT_FAILURE);
+        }
         long double r = stackForNumbers.top().getValue();
         stackForNumbers>>(1);
+        if (stackForNumbers.empty()) {
+            std::cerr << "Incrorrext expression"<<std::endl;
+            std::exit(EXIT_FAILURE);
+        }
         long double l = stackForNumbers.top().getValue();
         stackForNumbers>>(1);
         if (!dynamic_cast<Operation*>(stackForBracetsAndOperations.top())->checkIsAbleToMakeOperation(l,r)) {
             std::cerr<<"Invalid operation: "<<std::endl;
             std::exit(EXIT_FAILURE);
         }
-        res += dynamic_cast<Operation*>(stackForBracetsAndOperations.top())->makeOperation(l,r);
+       // std::cout<<l<<' '<<r<<' '<<Number(dynamic_cast<Operation*>(stackForBracetsAndOperations.top())->makeOperation(l,r)).getValue()<<'\n';
+        stackForNumbers<<Number(dynamic_cast<Operation*>(stackForBracetsAndOperations.top())->makeOperation(l,r));
         stackForBracetsAndOperations>>(1);
     }
     while (!stackForNumbers.empty()) {
