@@ -10,5 +10,7 @@ add_executable(calculator main.cpp
         Expression.cpp
         Expression.h
         AtomicExpression.cpp
-        AtomicExpression.h
-)
+        AtomicExpression.h)
+enable_testing()
+add_subdirectory(Google_tests)
+
