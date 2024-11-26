@@ -29,10 +29,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5bc36f40-2b2e-4e1b-ade5-2b5d0b5d86cb" name="Changes" comment=" добавил тесты. Тесты на простые выражения без скобочек и тесты состоящие из просто чисел">
+    <list default="true" id="5bc36f40-2b2e-4e1b-ade5-2b5d0b5d86cb" name="Changes" comment="добавил поле numberOfOperands и соответсвующие методы для поддержки унарных операций. Немного почистил код">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AtomicExpression.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/AtomicExpression.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AtomicExpression.h" beforeDir="false" afterPath="$PROJECT_DIR$/AtomicExpression.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Calculator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Calculator.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Expression.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Expression.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -74,6 +73,36 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AtomicExpression.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AtomicExpression.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Calculator.cpp" root0="FORCE_HIGHLIGHTING" />
@@ -101,7 +130,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "CMake Application.calculator.executor": "Coverage",
+    "CMake Application.calculator.executor": "Run",
     "Google Test.Google_Tests_run.executor": "Run",
     "Google Test.test1.executor": "Run",
     "RunOnceActivity.RadMigrateCodeStyle": "true",
@@ -216,7 +245,7 @@
       <workItem from="1732555481990" duration="1936000" />
       <workItem from="1732561177535" duration="867000" />
       <workItem from="1732619861983" duration="4191000" />
-      <workItem from="1732628212903" duration="1149000" />
+      <workItem from="1732628212903" duration="3229000" />
     </task>
     <task id="LOCAL-00001" summary="добавил stack.h и начал писать stack.cpp">
       <option name="closed" value="true" />
@@ -474,7 +503,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732628346778</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="добавил поле numberOfOperands и соответсвующие методы для поддержки унарных операций. Немного почистил код">
+      <option name="closed" value="true" />
+      <created>1732629921815</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1732629921815</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -497,8 +534,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="реализовал empty() в стеке" />
-    <MESSAGE value="реализовал деструктор в стеке" />
     <MESSAGE value="переписал заголовочник, под новую логику стека, написал конструктор и деструктор" />
     <MESSAGE value="написал reallocate" />
     <MESSAGE value="написал push" />
@@ -522,24 +557,31 @@
     <MESSAGE value="добавил игнор" />
     <MESSAGE value="добавил гугл тесты" />
     <MESSAGE value=" добавил тесты. Тесты на простые выражения без скобочек и тесты состоящие из просто чисел" />
-    <option name="LAST_COMMIT_MESSAGE" value=" добавил тесты. Тесты на простые выражения без скобочек и тесты состоящие из просто чисел" />
+    <MESSAGE value="добавил папку .idea в гитигнор" />
+    <MESSAGE value="добавил поле numberOfOperands и соответсвующие методы для поддержки унарных операций. Немного почистил код" />
+    <option name="LAST_COMMIT_MESSAGE" value="добавил поле numberOfOperands и соответсвующие методы для поддержки унарных операций. Немного почистил код" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/Calculator.cpp</url>
-          <line>106</line>
+          <line>139</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/Calculator.cpp</url>
-          <line>42</line>
+          <line>48</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/main.cpp</url>
           <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Expression.cpp</url>
+          <line>26</line>
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

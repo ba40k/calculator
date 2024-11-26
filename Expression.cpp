@@ -29,9 +29,14 @@ Expression::Expression(std::string &str) {
     std::string buf;
     for (int i = 0; i < str.size(); i++) {
         if ((str[i]>='0' && str[i]<='9') || str[i]=='.') {
+            if (!buf.empty()) {
+                std::cerr<<"Invalid expression"<<std::endl;
+                exit(EXIT_FAILURE);
+            }
             buf += str[i];
             if (i == str.size() - 1) {
                 tokens.push_back(buf);
+                buf.clear();
             }
             else {
                 if (!((str[i+1]>='0' && str[i+1]<='9') || str[i+1]=='.')) {
@@ -41,13 +46,24 @@ Expression::Expression(std::string &str) {
             }
             continue;
         }
-        if (str[i]=='+' || str[i]=='-' || str[i]=='*' || str[i]=='/'
-            || str[i]=='^' || str[i] == '(' || str[i] == ')') {
+        if (str[i] == '(' || str[i] == ')') {
+            if (!buf.empty()) {
+                std::cerr<<"Invalid expression"<<std::endl;
+                exit(EXIT_FAILURE);
+            }
             std::string token;
             token+=str[i];
             tokens.push_back(token);
             continue;
         }
+        buf.push_back(str[i]);
+        if (Operation::isDefined(buf)) {
+            tokens.push_back(buf);
+            buf.clear();
+        }
+
+    }
+    if (!buf.empty()) {
         isHaveUnidentified=1;
     }
     expr = new AtomicExpression*[tokens.size()];
