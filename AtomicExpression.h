@@ -16,7 +16,7 @@ public:
     std::string getType() {
         return type;
     }
-    AtomicExpression(std::string _type) : type(_type) {};
+    explicit AtomicExpression(const std::string &_type) : type(_type) {};
     virtual ~AtomicExpression() = default;
 };
 class Number : public AtomicExpression {
@@ -33,25 +33,29 @@ class Operation : public AtomicExpression {
 private:
     static std::map<std::string,std::tuple< std::function<long double(long double , long double)>,
                                             std::function<bool(long double, long double)>,
-                                            int>> definedOperations;
+                                            int,int>> definedOperations;
     std::function<long double(long double , long double)> operation;
     std::function<bool(long double, long double)> isAbleToMakeOperation;
+    int numberOfOperands;
     int priority;
 public:
-    static bool isDefined(std::string _operation);
+    static bool isDefined(const std::string &_operation);
     static std::function<long double(long double, long double)> getOperation(std::string _operation);
     static std::function<bool(long double, long double)> getAbleToMakeOperation(std::string _operation);
-    static void defineOperation(std::string operationNotation,
+    static void defineOperation(const std::string &operationNotation,
                       std::function<long double (long double, long double)> operationLogic,
                       std::function<bool (long double, long double)> isAbleChecker,
-                      int priority);
-    static void removeOperation(std::string operationNotation);
-    static int getPriority(std::string _operation);
+                      int priority, int numberOfOperands);
+    static void removeOperation(const std::string &operationNotation);
+    static int getPriority(const std::string &_operation);
     long double makeOperation(Number l, Number r);
     bool checkIsAbleToMakeOperation(long double a, long double b);
     int getPriority();
+    int getNumberOfOperands();
+    static int getNumberOfOperands (const std::string &_operation);
     Operation(std::function<long double(long double , long double)> _operation,
-            std::function<bool(long double, long double)> _isAbleToMakeOperation,int _priority);
+            std::function<bool(long double, long double)> _isAbleToMakeOperation,int _priority,
+            int _numberOfOperands);
 };
 class Bracket : public AtomicExpression {
     char bracket;

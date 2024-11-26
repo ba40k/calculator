@@ -59,7 +59,8 @@ Expression::Expression(std::string &str) {
         if (Operation::isDefined(tokens[i])) {
             expr[i] = new Operation(Operation::getOperation(tokens[i]),
                                     Operation::getAbleToMakeOperation(tokens[i]),
-                                    Operation::getPriority(tokens[i]));
+                                    Operation::getPriority(tokens[i]),
+                                    Operation::getNumberOfOperands(tokens[i]));
         }
         if (tokens[i][0]>='0' && tokens[i][0]<='9') {
             expr[i] = new Number(stold(tokens[i]));

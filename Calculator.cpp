@@ -7,28 +7,28 @@
 #include <math.h>
 void Calculator::appOperation(std::string operationNotation,
                               std::function<long double(long double, long double)> operationLogic,
-                              std::function<bool(long double, long double)> isAbleChecker, int priority) {
-    Operation::defineOperation(operationNotation, operationLogic, isAbleChecker, priority);
-
+                              std::function<bool(long double, long double)> isAbleChecker, int priority,
+                              int numberOfOperands) {
+    Operation::defineOperation(operationNotation, operationLogic, isAbleChecker, priority,numberOfOperands);
 }
 void Calculator::removeOperation(std::string operationNotation) {
     Operation::removeOperation(operationNotation);
 }
 Calculator::Calculator() {
     Operation::defineOperation("+",[](long double a, long double b){return a + b;},
-                                [](long double a, long double b){return true;},0);
+                                [](long double a, long double b){return true;},0,2);
 
     Operation::defineOperation("-",[](long double a, long double b){return a - b;},
-                                [](long double a, long double b){return true;},0);
+                                [](long double a, long double b){return true;},0,2);
 
     Operation::defineOperation("/",[](long double a, long double b){return a / b;},
-                                [](long double a, long double b){return b!=0;},1);
+                                [](long double a, long double b){return b!=0;},1,2);
 
     Operation::defineOperation("*",[](long double a, long double b){return a * b;},
-                                [](long double a, long double b){return true;},1);
+                                [](long double a, long double b){return true;},1,2);
 
     Operation::defineOperation("^",[](long double a, long double b){return std::pow(a,b);},
-                                [](long double a, long double b){return (!(a==0 && b<0));},2);
+                                [](long double a, long double b){return (!(a==0 && b<0));},2,2);
 }
 
 long double Calculator::calculate(std::string &stringExpression) {
