@@ -190,14 +190,14 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Google Test.Google_Tests_run" />
-      <item itemvalue="CMake Application.calculator" />
-      <item itemvalue="CMake Application.calculator_lib" />
       <item itemvalue="CMake Application.gmock" />
       <item itemvalue="CMake Application.gmock_main" />
       <item itemvalue="CMake Application.gtest" />
       <item itemvalue="CMake Application.gtest_main" />
+      <item itemvalue="CMake Application.calculator" />
+      <item itemvalue="CMake Application.calculator_lib" />
       <item itemvalue="CTest Application.All CTest" />
+      <item itemvalue="Google Test.Google_Tests_run" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
