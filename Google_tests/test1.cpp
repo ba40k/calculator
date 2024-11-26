@@ -73,3 +73,7 @@ TEST_F(CalculatorTest, HandlesInput12) {
     std::string expr = "(0+2^2-4*sqrt(1))^2";
     EXPECT_EQ(0,calculatorDevice.calculate(expr));
 }
+TEST_F(CalculatorTest, HandlesInput13) {
+    std::string expr = "-15+20*(-1)^3";
+    EXPECT_EQ(-35,calculatorDevice.calculate(expr));
+}
