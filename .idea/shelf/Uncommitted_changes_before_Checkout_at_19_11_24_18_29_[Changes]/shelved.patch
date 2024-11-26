@@ -1,0 +1,17 @@
+Index: stack.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\n// Created by radamir on 19.11.24.\n//\n\n#ifndef STACK_H\n#define STACK_H\ntemplate<typename  T>\nclass Stack {\nprivate:\n    struct Node {\n        T data;\n        Node* previous;\n    };\n    int curSize;\n    Node head;\npublic:\n    Stack();\n    void push(T data);\n    T top() const;\n    bool empty() const;\n    void pop();\n    int size()const;\n\n\n};\n#endif //STACK_H\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/stack.h b/stack.h
+--- a/stack.h	(revision b8fdbf99273623f3467eabc3fa1a63065891407d)
++++ b/stack.h	(date 1732030123773)
+@@ -21,6 +21,5 @@
+     void pop();
+     int size()const;
+ 
+-
+ };
+ #endif //STACK_H

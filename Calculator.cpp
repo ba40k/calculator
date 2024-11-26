@@ -28,7 +28,7 @@ Calculator::Calculator() {
                                 [](long double a, long double b){return true;},1);
 
     Operation::defineOperation("^",[](long double a, long double b){return std::pow(a,b);},
-                                [](long double a, long double b){return (!(a==0 && b<0));},1);
+                                [](long double a, long double b){return (!(a==0 && b<0));},2);
 }
 
 long double Calculator::calculate(std::string &stringExpression) {
