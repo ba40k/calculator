@@ -28,11 +28,8 @@ Expression::Expression(std::string &str) {
     std::vector<std::string> tokens;
     std::string buf;
     for (int i = 0; i < str.size(); i++) {
+
         if ((str[i]>='0' && str[i]<='9') || str[i]=='.') {
-            if (!buf.empty()) {
-                std::cerr<<"Invalid expression"<<std::endl;
-                exit(EXIT_FAILURE);
-            }
             buf += str[i];
             if (i == str.size() - 1) {
                 tokens.push_back(buf);
@@ -60,6 +57,11 @@ Expression::Expression(std::string &str) {
         if (Operation::isDefined(buf)) {
             tokens.push_back(buf);
             buf.clear();
+            continue;
+        }
+        if (i==str.size() - 1 || ((str[i+1]>='0' && str[i+1]<='9') || str[i+1]=='.')) {
+            std::cerr<<"Invalid expression"<<std::endl;
+            exit(EXIT_FAILURE);
         }
 
     }

@@ -29,11 +29,11 @@ Calculator::Calculator() {
 
     Operation::defineOperation("^",[](long double a, long double b){return std::pow(a,b);},
                                 [](long double a, long double b){return (b>0);},2,2);
-    Operation::defineOperation("sqrt",[](long double a, long double b =0){return sqrt(a);},
+    Operation::defineOperation("sqrt",[](long double a, long double b ){return sqrt(a);},
                                 [](long double a, long double b){return a>=0;},3,1);
-    Operation::defineOperation("sin",[](long double a, long double b =0){return sin(a);},
+    Operation::defineOperation("sin",[](long double a, long double b ){return sin(a);},
                                 [](long double a, long double b){return true;},3,1);
-    Operation::defineOperation("cos",[](long double a, long double b =0){return cos(a);},
+    Operation::defineOperation("cos",[](long double a, long double b ){return cos(a);},
                                 [](long double a, long double b){return true;},3,1);
 }
 
@@ -54,6 +54,7 @@ long double Calculator::calculate(std::string &stringExpression) {
         if (dynamic_cast<Number*>(expr[i])) {
             stackForNumbers<<(*dynamic_cast<Number*>(expr[i]));
         }
+
         if (dynamic_cast<Bracket*>(expr[i])) {
             char bracketType = dynamic_cast<Bracket*>(expr[i])->bracketType();
             if (bracketType == '(') {
@@ -98,6 +99,7 @@ long double Calculator::calculate(std::string &stringExpression) {
                 stackForBracetsAndOperations>>(1);
             }
         }
+
         if (dynamic_cast<Operation*>(expr[i])) {
             int currentPriority = dynamic_cast<Operation*>(expr[i])->getPriority();
             while (stackForBracetsAndOperations.size()>0 && dynamic_cast<Operation*>(stackForBracetsAndOperations.top()) &&
@@ -128,7 +130,7 @@ long double Calculator::calculate(std::string &stringExpression) {
                         long double l = stackForNumbers.top().getValue();
                         stackForNumbers>>(1);
                         if (!dynamic_cast<Operation*>(stackForBracetsAndOperations.top())->checkIsAbleToMakeOperation(l,r)) {
-                            std::cerr<<"Invalid operation: "<<std::endl;
+                            std::cerr<<"Incrorrext expression"<<std::endl;
                             std::exit(EXIT_FAILURE);
                         }
                         stackForNumbers<<Number(dynamic_cast<Operation*>(stackForBracetsAndOperations.top())->makeOperation(l,r));
