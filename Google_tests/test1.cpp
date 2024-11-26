@@ -49,3 +49,7 @@ TEST_F(CalculatorTest, HandlesInput6) {
     std::string expr = "1.";
     EXPECT_EQ(1,calculatorDevice.calculate(expr));
 }
+TEST_F(CalculatorTest, HandlesInput7) {
+    std::string expr = "sqrt9";
+    EXPECT_EQ(3,calculatorDevice.calculate(expr));
+}
