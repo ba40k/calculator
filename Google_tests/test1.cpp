@@ -20,29 +20,60 @@ TEST_F(CalculatorTest, HandlesJustNumbers) {
     }
 }
 
-TEST(TestCalculator, HandlesNulls)
+TEST_F(CalculatorTest, HandlesNulls)
 {
-    Calculator calculatorDevice;
-    std::string expr;
-    expr = "0+0-0+0-0-0+0";
+    std::string expr = "0+0-0+0-0-0+0";
     EXPECT_EQ(0,calculatorDevice.calculate(expr));
-    expr = "2*4-4^2+81/3^2";
-    EXPECT_EQ(1,calculatorDevice.calculate(expr));
-    expr = "1/1^1*1^100+1-1^100";
-    EXPECT_EQ(1,calculatorDevice.calculate(expr));
-    expr = "1..0";
-    EXPECT_EQ(1,calculatorDevice.calculate(expr));
-    expr = "1.";
-    EXPECT_EQ(1,calculatorDevice.calculate(expr));
 }
-TEST(TestCalculator, HandlesInput1) {
-    Calculator calculatorDevice;
+TEST_F(CalculatorTest, HandlesInput1) {
     std::string expr = "1+2-3+4*2/2+10^2";
     EXPECT_EQ(104,calculatorDevice.calculate(expr));
 }
-TEST(TestCalculator, HandlesInput2) {
-    Calculator calculatorDevice;
-    std::string expr;
-    expr = "2*2*2^0";
+TEST_F(CalculatorTest, HandlesInput2) {
+    std::string  expr = "2*2*2^1";
+    EXPECT_EQ(8,calculatorDevice.calculate(expr));
+}
+TEST_F(CalculatorTest, HandlesInput3) {
+    std::string expr = "2*4-4^2+81/3^2";
+    EXPECT_EQ(1,calculatorDevice.calculate(expr));
+}
+TEST_F(CalculatorTest, HandlesInput4) {
+    std::string expr = "1/1^1*1^100+1-1^100";
+    EXPECT_EQ(1,calculatorDevice.calculate(expr));
+}
+TEST_F(CalculatorTest, HandlesInput5) {
+    std::string expr = "1..0";
+    EXPECT_EQ(1,calculatorDevice.calculate(expr));
+}
+TEST_F(CalculatorTest, HandlesInput6) {
+    std::string expr = "1.";
+    EXPECT_EQ(1,calculatorDevice.calculate(expr));
+}
+TEST_F(CalculatorTest, HandlesInput7) {
+    std::string expr = "sqrt9";
+    EXPECT_EQ(3,calculatorDevice.calculate(expr));
+}
+TEST_F(CalculatorTest, HandlesInput8) {
+    std::string expr = "sqrt0";
+    EXPECT_EQ(0,calculatorDevice.calculate(expr));
+}
+TEST_F(CalculatorTest, HandlesInput9) {
+    std::string expr = "sqrt81";
+    EXPECT_EQ(9,calculatorDevice.calculate(expr));
+}
+TEST_F(CalculatorTest, HandlesInput10) {
+    std::string expr = "sqrt9*sin0";
+    EXPECT_EQ(0,calculatorDevice.calculate(expr));
+}
+TEST_F(CalculatorTest, HandlesInput11) {
+    std::string expr = "1+sqrt(18/2*2/3*3/2)+sin(0)";
     EXPECT_EQ(4,calculatorDevice.calculate(expr));
+}
+TEST_F(CalculatorTest, HandlesInput12) {
+    std::string expr = "(0+2^2-4*sqrt(1))^2";
+    EXPECT_EQ(0,calculatorDevice.calculate(expr));
+}
+TEST_F(CalculatorTest, HandlesInput13) {
+    std::string expr = "-15+20*(-1)^3";
+    EXPECT_EQ(-35,calculatorDevice.calculate(expr));
 }
