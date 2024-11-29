@@ -6,8 +6,24 @@
 #define CALCULATOR_H
 #include <string>
 #include "Expression.h"
+#include "stack.h"
 
 class Calculator {
+private:
+    void processNumberCase(Expression &expr, int curPosition,Stack<Number> &stackForNumbers);
+
+    void processBracketCase(Expression &expr, int curPosition,
+        Stack<AtomicExpression*>  &stackForBracketsAndOperations,
+        Stack<Number> &stackForNumbers);
+
+    void processOperationsCase(Expression &expr, int curPosition,
+        Stack<AtomicExpression*>  &stackForBracketsAndOperations,
+        Stack<Number> &stackForNumbers);
+    void processRemainingOperations(Stack<Number> &stackForNumbers,
+                          Stack<AtomicExpression*>  &stackForBracketsAndOperations,
+                          long double &res);
+    void executeOperation(Stack<Number> &stackForNumbers,
+                          Stack<AtomicExpression*>  &stackForBracketsAndOperations);
 public:
     Calculator();
     void appOperation(std::string operationNotation,

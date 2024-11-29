@@ -12,12 +12,12 @@ private:
     int curCapacity;
     const int INITIAL_CAPACITY = 16;
     void push(T data);
-    void pop();
     void reallocate();
 public:
     Stack();
-    void operator<<(T data);
-    void operator>>(int count);
+    void pop();
+    void operator<<(const T &data);
+    T operator>>(T &to);
     Stack<T>& operator=(const Stack<T>& other);
     bool operator==(const Stack &other) const;
     bool operator!=(const Stack &other) const;
@@ -31,12 +31,14 @@ public:
     ~Stack();
 };
 template<typename T>
-void Stack<T>::operator>>(int count) {
+T Stack<T>::operator>>(T &to) {
+    int count = 1;
     if (count > size()) {
         std::cerr << "Stack size is too small" << std::endl;
         exit(EXIT_FAILURE);
     }
     while (count--) {
+        return top();
         pop();
     }
 }
@@ -51,7 +53,7 @@ T& Stack<T>::operator[](int index) {
 }
 
 template<typename T>
-void Stack<T>::operator<<(T data) {
+void Stack<T>::operator<<(const T &data) {
     push(data);
 }
 
