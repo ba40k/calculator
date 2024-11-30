@@ -11,18 +11,41 @@
 #include <utility>
 #include <math.h>
 #include <ostream>
+using operationsStorage = std::map<std::string, std::tuple< std::function<long double(std::vector<long double>&)>, std::function<bool(std::vector<long double>&)>, int, int >>;
+
+
+std::function<long double(std::vector<long double>&)> Expression::getOperation(std::string &_operation,
+                                                               operationsStorage &definedOperations) {
+    return std::get<0>(definedOperations[_operation]);
+}
+
+std::function<bool(std::vector<long double>&)> Expression::getCheckerOfOperationAbility(std::string &_operation,
+                                                                        operationsStorage &definedOperations) {
+    return std::get<1>(definedOperations[_operation]);
+}
+int Expression::getPriority(const std::string &_operation,
+                    operationsStorage &definedOperations) {
+    return std::get<2>(definedOperations[_operation]);
+}
+bool Expression::isDefined(const std::string &_operation, operationsStorage &definedOperations) {
+    return (definedOperations.find(_operation)!=definedOperations.end());
+}
+
+int Expression::getNumberOfOperands(const std::string &_operation, operationsStorage &definedOperations) {
+    return (std::get<3>(definedOperations[_operation]));
+}
+
 bool Expression::relatesToNumbers(char ch) {
     return ((ch>='0' && ch<='9') || ch=='.');
 }
 bool Expression::relatesToBrackets(char ch) {
     return (ch == '(' || ch == ')');
 }
-bool Expression::relatesToOperations(std::string &str) {
-    return Operation::isDefined(str);
+
+bool Expression::relatesToOperations(std::string &str, operationsStorage &definedOPerations) {
+    return isDefined(str,definedOPerations);
 }
-Expression::Expression(std::string &str) {
-
-
+Expression::Expression(std::string &str, operationsStorage &definedOperations) {
     //небольшой костылек, числа и выражения вида -x будут иметь вид 0-x
     std::string addNullsBeforeMinuses; // преобразованная исходная строка, согласно костылю выше
     for (int i =0;i<str.size();i++) {
@@ -70,7 +93,7 @@ Expression::Expression(std::string &str) {
         // если мы дошли дло сюда, значит мы имеем дело не с цифрой и не со скобкой
         // тогда единственный вариант - это часть обозначения операции
         buf.push_back(str[i]); // кидаем в буфер и пытаемся опознать
-        if (relatesToOperations(buf)) {
+        if (relatesToOperations(buf,definedOperations)) {
             tokens.push_back(buf);
             buf.clear();
             continue;
@@ -95,11 +118,11 @@ Expression::Expression(std::string &str) {
             expr[i] = new Bracket(tokens[i][0]);
             continue;
         }
-        if (relatesToOperations(tokens[i])) {
-            expr[i] = new Operation(Operation::getOperation(tokens[i]),
-                                    Operation::getAbleToMakeOperation(tokens[i]),
-                                    Operation::getPriority(tokens[i]),
-                                    Operation::getNumberOfOperands(tokens[i]));
+        if (relatesToOperations(tokens[i], definedOperations)) {
+            expr[i] = new Operation(getOperation(tokens[i], definedOperations),
+                                    getCheckerOfOperationAbility(tokens[i], definedOperations),
+                                    getPriority(tokens[i],definedOperations),
+                                    getNumberOfOperands(tokens[i],definedOperations));
             continue;
         }
         if (relatesToNumbers(tokens[i][0])) {
@@ -146,9 +169,6 @@ Expression::~Expression() {
     }
     delete [] expr;
 }
-
-
-
 AtomicExpression* Expression::operator[](int i) {
     return expr[i];
 }
