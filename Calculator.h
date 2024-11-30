@@ -10,6 +10,10 @@
 
 class Calculator {
 private:
+    std::map<std::string,std::tuple< std::function<long double(std::vector<long double>&)>,
+                                            std::function<bool(std::vector<long double>&)>,
+                                            int,int>> definedOperations;
+
     void processNumberCase(Expression &expr, int curPosition,Stack<Number> &stackForNumbers);
 
     void processBracketCase(Expression &expr, int curPosition,
@@ -26,7 +30,7 @@ private:
                           Stack<AtomicExpression*>  &stackForBracketsAndOperations);
 public:
     Calculator();
-    void appOperation(std::string operationNotation,
+    void addOperation(std::string operationNotation,
                       std::function<long double (std::vector<long double>&)> operationLogic,
                       std::function<bool (std::vector<long double>&)> isAbleChecker,
                       int priority, int numberOfOperands);

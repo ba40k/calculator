@@ -6,38 +6,38 @@
 #include "stack.h"
 #include <math.h>
 
-void Calculator::appOperation(std::string operationNotation,
+void Calculator::addOperation(std::string operationNotation,
                               std::function<long double(std::vector<long double>&)> operationLogic,
                               std::function<bool(std::vector<long double>&)> isAbleChecker, int priority,
                               int numberOfOperands) {
-    Operation::defineOperation(operationNotation, operationLogic, isAbleChecker, priority, numberOfOperands);
+    definedOperations[operationNotation] = {operationLogic,isAbleChecker,priority,numberOfOperands};
 }
 
 void Calculator::removeOperation(std::string operationNotation) {
-    Operation::removeOperation(operationNotation);
+    definedOperations.erase(operationNotation);
 }
 
 Calculator::Calculator() {
     // добавление операций
-    Operation::defineOperation("+", [](std::vector<long double>& operands) { return operands[0] + operands[1]; },
+    addOperation("+", [](std::vector<long double>& operands) { return operands[0] + operands[1]; },
                                [](std::vector<long double> &operands) { return true; }, 0, 2);
 
-    Operation::defineOperation("-", [](std::vector<long double>& operands) { return operands[0] - operands[1]; },
+    addOperation("-", [](std::vector<long double>& operands) { return operands[0] - operands[1]; },
                                [](std::vector<long double>& operands) { return true; }, 0, 2);
 
-    Operation::defineOperation("/", [](std::vector<long double>& operands) { return operands[0] / operands[1]; },
+    addOperation("/", [](std::vector<long double>& operands) { return operands[0] / operands[1]; },
                                [](std::vector<long double>& operands) { return operands[1] != 0; }, 1, 2);
 
-    Operation::defineOperation("*", [](std::vector<long double>& operands) { return operands[0] * operands[1]; },
+    addOperation("*", [](std::vector<long double>& operands) { return operands[0] * operands[1]; },
                                [](std::vector<long double>& operands) { return true; }, 1, 2);
 
-    Operation::defineOperation("^", [](std::vector<long double>& operands) { return std::pow(operands[0], operands[1]); },
+    addOperation("^", [](std::vector<long double>& operands) { return std::pow(operands[0], operands[1]); },
                                [](std::vector<long double>& operands) { return (operands[1] > 0); }, 2, 2);
-    Operation::defineOperation("sqrt", [](std::vector<long double>& operands) { return sqrt(operands[0]); },
+    addOperation("sqrt", [](std::vector<long double>& operands) { return sqrt(operands[0]); },
                                [](std::vector<long double>& operands) { return operands[0] >= 0; }, 3, 1);
-    Operation::defineOperation("sin", [](std::vector<long double>& operands) { return sin(operands[0]); },
+    addOperation("sin", [](std::vector<long double>& operands) { return sin(operands[0]); },
                                [](std::vector<long double>& operands) { return true; }, 3, 1);
-    Operation::defineOperation("cos", [](std::vector<long double>& operands) { return cos(operands[0]); },
+    addOperation("cos", [](std::vector<long double>& operands) { return cos(operands[0]); },
                                [](std::vector<long double>& operands) { return true; }, 3, 1);
 }
 
@@ -69,18 +69,20 @@ void Calculator::executeOperation(Stack<Number> &stackForNumbers,
 }
 
 void Calculator::processNumberCase(Expression &expr, int curPosition, Stack<Number> &stackForNumbers) {
-    if (dynamic_cast<Number *>(expr[curPosition])) {
+    auto castedTop = dynamic_cast<Number *>(expr[curPosition]);
+    if (castedTop) {
         // встречено число - просто выгружаем его в стек для чисел
-        stackForNumbers << (*dynamic_cast<Number *>(expr[curPosition]));
+        stackForNumbers << (*castedTop);
     }
 }
 
 void Calculator::processBracketCase(Expression &expr, const int curPosition,
                                     Stack<AtomicExpression *> &stackForBracketsAndOperations,
                                     Stack<Number> &stackForNumbers) {
-    if (dynamic_cast<Bracket *>(expr[curPosition])) {
+    auto castedTop = dynamic_cast<Bracket *>(expr[curPosition]);
+    if (castedTop) {
         // встречена скобка
-        char bracketType = dynamic_cast<Bracket *>(expr[curPosition])->bracketType();
+        char bracketType = castedTop->bracketType();
         if (bracketType == '(') {
             // если скобка открывающая - то кладем её в стек и всё
             stackForBracketsAndOperations << (expr[curPosition]);
@@ -98,9 +100,10 @@ void Calculator::processBracketCase(Expression &expr, const int curPosition,
 void Calculator::processOperationsCase(Expression &expr, int curPosition,
                                        Stack<AtomicExpression *> &stackForBracketsAndOperations,
                                        Stack<Number> &stackForNumbers) {
-    if (dynamic_cast<Operation *>(expr[curPosition])) {
+    auto castedTop = dynamic_cast<Operation *>(expr[curPosition]);
+    if (castedTop) {
         // случай когда попалась операция
-        int currentPriority = dynamic_cast<Operation *>(expr[curPosition])->getPriority();
+        int currentPriority = castedTop->getPriority();
         // большой страшный цикл, который по сути просто идет и смотрит на верхнюю операцию и если она приоритетнее, то выполняет ее
         while (!stackForBracketsAndOperations.empty() && dynamic_cast<Operation *>(stackForBracketsAndOperations.top())
                &&
@@ -128,7 +131,7 @@ void Calculator::processRemainingOperations(Stack<Number> &stackForNumbers,
 }
 
 long double Calculator::calculate(std::string &stringExpression) {
-    Expression expr(stringExpression);
+    Expression expr(stringExpression,definedOperations);
     if (!expr.isCorrect()) {
         std::cerr << "Invalid expression: " << stringExpression << std::endl;
         std::exit(EXIT_FAILURE);
