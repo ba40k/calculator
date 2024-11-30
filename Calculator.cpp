@@ -7,8 +7,8 @@
 #include <math.h>
 
 void Calculator::appOperation(std::string operationNotation,
-                              std::function<long double(long double, long double)> operationLogic,
-                              std::function<bool(long double, long double)> isAbleChecker, int priority,
+                              std::function<long double(std::vector<long double>&)> operationLogic,
+                              std::function<bool(std::vector<long double>&)> isAbleChecker, int priority,
                               int numberOfOperands) {
     Operation::defineOperation(operationNotation, operationLogic, isAbleChecker, priority, numberOfOperands);
 }
@@ -19,64 +19,52 @@ void Calculator::removeOperation(std::string operationNotation) {
 
 Calculator::Calculator() {
     // добавление операций
-    Operation::defineOperation("+", [](long double a, long double b) { return a + b; },
-                               [](long double a, long double b) { return true; }, 0, 2);
+    Operation::defineOperation("+", [](std::vector<long double>& operands) { return operands[0] + operands[1]; },
+                               [](std::vector<long double> &operands) { return true; }, 0, 2);
 
-    Operation::defineOperation("-", [](long double a, long double b) { return a - b; },
-                               [](long double a, long double b) { return true; }, 0, 2);
+    Operation::defineOperation("-", [](std::vector<long double>& operands) { return operands[0] - operands[1]; },
+                               [](std::vector<long double>& operands) { return true; }, 0, 2);
 
-    Operation::defineOperation("/", [](long double a, long double b) { return a / b; },
-                               [](long double a, long double b) { return b != 0; }, 1, 2);
+    Operation::defineOperation("/", [](std::vector<long double>& operands) { return operands[0] / operands[1]; },
+                               [](std::vector<long double>& operands) { return operands[1] != 0; }, 1, 2);
 
-    Operation::defineOperation("*", [](long double a, long double b) { return a * b; },
-                               [](long double a, long double b) { return true; }, 1, 2);
+    Operation::defineOperation("*", [](std::vector<long double>& operands) { return operands[0] * operands[1]; },
+                               [](std::vector<long double>& operands) { return true; }, 1, 2);
 
-    Operation::defineOperation("^", [](long double a, long double b) { return std::pow(a, b); },
-                               [](long double a, long double b) { return (b > 0); }, 2, 2);
-    Operation::defineOperation("sqrt", [](long double a, long double b) { return sqrt(a); },
-                               [](long double a, long double b) { return a >= 0; }, 3, 1);
-    Operation::defineOperation("sin", [](long double a, long double b) { return sin(a); },
-                               [](long double a, long double b) { return true; }, 3, 1);
-    Operation::defineOperation("cos", [](long double a, long double b) { return cos(a); },
-                               [](long double a, long double b) { return true; }, 3, 1);
+    Operation::defineOperation("^", [](std::vector<long double>& operands) { return std::pow(operands[0], operands[1]); },
+                               [](std::vector<long double>& operands) { return (operands[1] > 0); }, 2, 2);
+    Operation::defineOperation("sqrt", [](std::vector<long double>& operands) { return sqrt(operands[0]); },
+                               [](std::vector<long double>& operands) { return operands[0] >= 0; }, 3, 1);
+    Operation::defineOperation("sin", [](std::vector<long double>& operands) { return sin(operands[0]); },
+                               [](std::vector<long double>& operands) { return true; }, 3, 1);
+    Operation::defineOperation("cos", [](std::vector<long double>& operands) { return cos(operands[0]); },
+                               [](std::vector<long double>& operands) { return true; }, 3, 1);
 }
 
 void Calculator::executeOperation(Stack<Number> &stackForNumbers,
                                   Stack<AtomicExpression *> &stackForBracketsAndOperations) {
-    if (stackForNumbers.empty()) {
-        std::cerr << "Incrorrext expression" << std::endl;
-        std::exit(EXIT_FAILURE);
-    }
-
-    const long double r = stackForNumbers.top().getValue();
-    stackForNumbers.pop();
-    auto castedTop = dynamic_cast<Operation *>(stackForBracketsAndOperations.top());
-
-    if (castedTop->getNumberOfOperands() == 1) {
-        // если операция унарная то мы извлекаем только одно число из стека
-        if (!castedTop->checkIsAbleToMakeOperation(r, 0)) {
-            // проверка на возможность вычисления
+    auto castedTop = dynamic_cast<Operation *>(stackForBracketsAndOperations.top()); // берем операцию из стека
+    int numberOfOperands = castedTop->getNumberOfOperands(); // смотрим в операции сколько ей надо операндов
+    std::vector<long double> operands;
+    while (numberOfOperands--) { // пока не возьмем сколько надо операндов
+        if (stackForNumbers.empty()) { // если не можем взять из стека операнд, значит выражение было неправильным
             std::cerr << "Incrorrext expression" << std::endl;
             std::exit(EXIT_FAILURE);
         }
-
-        stackForNumbers << Number(castedTop->makeOperation(r, 0));
-        stackForBracketsAndOperations.pop();
-        return; // сделали операцию и идем дальше
+        operands.push_back(stackForNumbers.top().getValue());
+        stackForNumbers.pop(); // удаляем только что взятый операнд
     }
-    // повторяем все ранее сделаное но уже для второго операнда
-    if (stackForNumbers.empty()) {
+
+    reverse(operands.begin(), operands.end());  // из-за особенностей польской нотации мы взяли операнды в обратном порядке
+                                                        // например 0-1 в польской нотации имеет вид 01-, если бы мы не сделали переворот, то
+                                                        // массив операндов был 1 0 и мы бы отнимали от 1 0 а не наоборот
+
+    if (!castedTop->checkIsAbleToMakeOperation(operands)) {
+        // проверка на возможность вычисления
         std::cerr << "Incrorrext expression" << std::endl;
         std::exit(EXIT_FAILURE);
     }
-
-    const long double l = stackForNumbers.top().getValue();
-    stackForNumbers.pop();
-    if (!castedTop->checkIsAbleToMakeOperation(l, r)) {
-        std::cerr << "Incrorrext expression" << std::endl;
-        std::exit(EXIT_FAILURE);
-    }
-    stackForNumbers << Number(castedTop->makeOperation(l, r));
+    stackForNumbers<<(Number(castedTop->makeOperation(operands)));
     stackForBracketsAndOperations.pop();
 }
 

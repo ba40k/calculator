@@ -27,8 +27,8 @@ private:
 public:
     Calculator();
     void appOperation(std::string operationNotation,
-                      std::function<long double (long double, long double)> operationLogic,
-                      std::function<bool (long double, long double)> isAbleChecker,
+                      std::function<long double (std::vector<long double>&)> operationLogic,
+                      std::function<bool (std::vector<long double>&)> isAbleChecker,
                       int priority, int numberOfOperands);
     void removeOperation(std::string operationNotation);
     long double calculate(std::string &stringExpression);

@@ -11,76 +11,98 @@
 #include <utility>
 #include <math.h>
 #include <ostream>
-
+bool Expression::relatesToNumbers(char ch) {
+    return ((ch>='0' && ch<='9') || ch=='.');
+}
+bool Expression::relatesToBrackets(char ch) {
+    return (ch == '(' || ch == ')');
+}
+bool Expression::relatesToOperations(std::string &str) {
+    return Operation::isDefined(str);
+}
 Expression::Expression(std::string &str) {
 
-    std::string addNullsBeforeMinuses;
+
+    //небольшой костылек, числа и выражения вида -x будут иметь вид 0-x
+    std::string addNullsBeforeMinuses; // преобразованная исходная строка, согласно костылю выше
     for (int i =0;i<str.size();i++) {
         char ch = str[i];
-        if (ch == '-' && (i==0 || str[i-1] == '(')) {
+        if (ch == '-' && (i==0 || str[i-1] == '(')) { // проверяем то что у нас унарный минус применяется к числу или выражению
             addNullsBeforeMinuses.push_back('0');
         }
         addNullsBeforeMinuses.push_back(ch);
     }
-    str = addNullsBeforeMinuses;
+    str = addNullsBeforeMinuses; // применяем изменения
 
-    isHaveUnidentified=false;
-    std::vector<std::string> tokens;
-    std::string buf;
+    isHaveUnidentified=false; // флаг, который говорит о том есть ли неопознанные символы в строке
+    std::vector<std::string> tokens;  // строка куда мы складываем опознанные части строки
+    std::string buf; // буфер куда мы складываем символы строки на опознание
     for (int i = 0; i < str.size(); i++) {
-
-        if ((str[i]>='0' && str[i]<='9') || str[i]=='.') {
-            buf += str[i];
-            if (i == str.size() - 1) {
-                tokens.push_back(buf);
-                buf.clear();
+        if (relatesToNumbers(str[i])) { //  если наткнулись на цифру, то
+            buf += str[i];              //  кидаем ее в буфер
+            if (i == str.size() - 1) {  //  проверяем, если она последняя в строке, то значит она и есть число
+                tokens.push_back(buf);  // кидаем ее в опознанные
+                buf.clear();            // чистим буфер
             }
             else {
-                if (!((str[i+1]>='0' && str[i+1]<='9') || str[i+1]=='.')) {
+                if (!relatesToNumbers(str[i+1])) { // если же цифра не последний символ строки, то
+                                                   // надо убедиться что после нее нет других цифр
+                                                   // если нет, то спокойно кидаем в опознанные и чистим буфер
                     tokens.push_back(buf);
                     buf.clear();
                 }
             }
+            // если все же есть цифры после, то читаем число дальше
             continue;
         }
-        if (str[i] == '(' || str[i] == ')') {
-            if (!buf.empty()) {
+        if (relatesToBrackets(str[i])) {
+            if (!buf.empty()) { // если буфер не пуст и мы встретили скобку, значит то что в буфере не операция и не число
+                                // тогда это нечто неопознанное - выражение неверно
                 std::cerr<<"Invalid expression"<<std::endl;
                 exit(EXIT_FAILURE);
             }
+            // просто кидаем скобку к опознаным
             std::string token;
             token+=str[i];
             tokens.push_back(token);
             continue;
         }
-        buf.push_back(str[i]);
-        if (Operation::isDefined(buf)) {
+        // если мы дошли дло сюда, значит мы имеем дело не с цифрой и не со скобкой
+        // тогда единственный вариант - это часть обозначения операции
+        buf.push_back(str[i]); // кидаем в буфер и пытаемся опознать
+        if (relatesToOperations(buf)) {
             tokens.push_back(buf);
             buf.clear();
             continue;
         }
-        if (i==str.size() - 1 || ((str[i+1]>='0' && str[i+1]<='9') || str[i+1]=='.')) {
+        // если мы дошли до конца строки или следующий символ не может быть частью обозначения операции - то выражение неверно
+        if (i==str.size() - 1 || relatesToNumbers(str[i+1])
+                            || relatesToBrackets(str[i+1])) {
             std::cerr<<"Invalid expression"<<std::endl;
             exit(EXIT_FAILURE);
         }
 
     }
-    if (!buf.empty()) {
-        isHaveUnidentified=1;
+
+    if (!buf.empty()) {// если буфер не пуст после предыдущего цикла, значит в нем осталось что-то неопознанное
+        isHaveUnidentified=1; // возможно лишний иф
     }
-    expr = new AtomicExpression*[tokens.size()];
-    for (int i = 0; i < tokens.size(); i++) {
-        if (tokens[i]=="(" || tokens[i]==")") {
+
+    expr = new AtomicExpression*[tokens.size()]; // создаем выражение
+    for (int i = 0; i < tokens.size(); i++) { // идем по опознанным строкам
+        // тут все очевидно
+        if (relatesToBrackets(tokens[i][0])) {
             expr[i] = new Bracket(tokens[i][0]);
             continue;
         }
-        if (Operation::isDefined(tokens[i])) {
+        if (relatesToOperations(tokens[i])) {
             expr[i] = new Operation(Operation::getOperation(tokens[i]),
                                     Operation::getAbleToMakeOperation(tokens[i]),
                                     Operation::getPriority(tokens[i]),
                                     Operation::getNumberOfOperands(tokens[i]));
+            continue;
         }
-        if (tokens[i][0]>='0' && tokens[i][0]<='9') {
+        if (relatesToNumbers(tokens[i][0])) {
             expr[i] = new Number(stold(tokens[i]));
         }
     }
@@ -95,10 +117,13 @@ int Expression::size() const {
     return curSize;
 }
 bool Expression::isCorrect() {
+    // проверяем имеем ли мы дело с правильной скобочной последовательностью
     int balance=0;
     for (int i = 0; i < curSize; i++) {
-        if (dynamic_cast<Bracket*>(expr[i])) {
-            auto b = dynamic_cast<Bracket*>(expr[i]);
+
+        auto b = dynamic_cast<Bracket*>(expr[i]);
+        if (b) {
+
             if (b->bracketType()==')') {
                 --balance;
             }
@@ -109,6 +134,9 @@ bool Expression::isCorrect() {
                 return false;
             }
         }
+    }
+    if (balance != 0) {
+        return false;
     }
     return true;
 }

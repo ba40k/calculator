@@ -11,6 +11,9 @@
 class Expression {
     AtomicExpression** expr;
     bool isHaveUnidentified;
+    bool relatesToNumbers(char ch);
+    bool relatesToBrackets(char ch);
+    bool relatesToOperations(std::string &str);
     int curSize;
 public:
     Expression(std::string &str);
