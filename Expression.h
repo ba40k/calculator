@@ -23,7 +23,6 @@ class Expression {
     int getNumberOfOperands (const std::string &_operation, operationsStorage &definedOperations);
 public:
     Expression(std::string &str,operationsStorage &definedOperations);
-    bool isCorrect();
     AtomicExpression* operator[](int i);
     int size() const;
     ~Expression();

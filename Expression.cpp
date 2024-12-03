@@ -136,30 +136,6 @@ Expression::Expression(std::string &str, operationsStorage &definedOperations) {
 int Expression::size() const {
     return curSize;
 }
-bool Expression::isCorrect() {
-    // проверяем имеем ли мы дело с правильной скобочной последовательностью
-    int balance=0;
-    for (int i = 0; i < curSize; i++) {
-
-        auto b = dynamic_cast<Bracket*>(expr[i]);
-        if (b) {
-
-            if (b->bracketType()==')') {
-                --balance;
-            }
-            else {
-                ++balance;
-            }
-            if (balance<0) {
-                return false;
-            }
-        }
-    }
-    if (balance != 0) {
-        return false;
-    }
-    return true;
-}
 Expression::~Expression() {
     for (int i = 0; i < curSize; i++) {
         delete expr[i];

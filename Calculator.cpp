@@ -128,12 +128,9 @@ void Calculator::processRemainingOperations(Stack<Number> &stackForNumbers,
         stackForNumbers.pop();
     }
 }
-
 long double Calculator::calculate(std::string &stringExpression) {
     Expression expr(stringExpression,definedOperations);
-    if (!expr.isCorrect()) {
-        throw std::invalid_argument("Calculator::calculate");
-    }
+
     long double res = 0;
     int curSize = expr.size();
     Stack<Number> stackForNumbers;
@@ -150,4 +147,36 @@ long double Calculator::calculate(std::string &stringExpression) {
     processRemainingOperations(stackForNumbers, stackForBracketsAndOperations, res);
 
     return res;
+}
+bool Calculator::isBracketsBalanced(std::string &stringExpression) {
+    int balance =0;
+    for (int i = 0; i < stringExpression.size(); i++) {
+        if (stringExpression[i]=='(') {
+            ++balance;
+        }
+        else if (stringExpression[i]==')') {
+            --balance;
+            if (balance<0) {
+                return false;
+            }
+        }
+    }
+    return (balance == 0);
+}
+bool Calculator::isAbleToCalculate(std::string &stringExpression) {
+    try {
+        calculate(stringExpression);
+        return true;
+    } catch (std::invalid_argument &e) {
+        return false;
+    }
+}
+long double Calculator::processString(std::string &stringExpression) {
+    if (!isBracketsBalanced(stringExpression)) {
+        throw std::invalid_argument("Calculator::processString");
+    }
+    if (!isAbleToCalculate(stringExpression)) {
+        throw std::invalid_argument("Calculator::processString");
+    }
+    return calculate(stringExpression);
 }
