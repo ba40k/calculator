@@ -44,7 +44,7 @@ T Stack<T>::operator>>(T &to) {
 
 template<typename T>
 T& Stack<T>::operator[](int index) {
-    if (index >= curSize) {
+    if (index >= curSize || index<0) {
         throw std::out_of_range("Stack::operator[]");
     }
     return array[index];
@@ -80,7 +80,7 @@ Stack<T> &Stack<T>::operator=(const Stack<T> &other) {
         if (this == &other) {
             return *this;
         }
-        int* newArray = new int[other.curCapacity];
+        T* newArray = new T[other.curCapacity];
         for (int i = 0; i < other.curSize; i++) {
             newArray[i] = other.array[i];
         }
@@ -104,6 +104,9 @@ bool Stack<T>::operator<(const Stack &other) const {
         if (array[i] > other.array[i]) {
             return false;
         }
+    }
+    if (curSize < other.curSize) {
+        return true;
     }
     return false;
 }
