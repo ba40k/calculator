@@ -13,11 +13,11 @@ private:
     std::string type;
 public:
     AtomicExpression() = default;
-    std::string getType() {
+    virtual std::string getType() {
         return type;
     }
     explicit AtomicExpression(const std::string &_type) : type(_type) {};
-    virtual ~AtomicExpression() = default;
+    ~AtomicExpression() = default;
 };
 class Number : public AtomicExpression {
 private:

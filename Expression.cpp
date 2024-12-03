@@ -81,8 +81,7 @@ Expression::Expression(std::string &str, operationsStorage &definedOperations) {
         if (relatesToBrackets(str[i])) {
             if (!buf.empty()) { // если буфер не пуст и мы встретили скобку, значит то что в буфере не операция и не число
                                 // тогда это нечто неопознанное - выражение неверно
-                std::cerr<<"Invalid expression"<<std::endl;
-                exit(EXIT_FAILURE);
+                throw std::invalid_argument("Expression::Expression");
             }
             // просто кидаем скобку к опознаным
             std::string token;
@@ -101,8 +100,7 @@ Expression::Expression(std::string &str, operationsStorage &definedOperations) {
         // если мы дошли до конца строки или следующий символ не может быть частью обозначения операции - то выражение неверно
         if (i==str.size() - 1 || relatesToNumbers(str[i+1])
                             || relatesToBrackets(str[i+1])) {
-            std::cerr<<"Invalid expression"<<std::endl;
-            exit(EXIT_FAILURE);
+            throw std::invalid_argument("Expression::Expression");
         }
 
     }
@@ -131,8 +129,7 @@ Expression::Expression(std::string &str, operationsStorage &definedOperations) {
     }
     curSize = tokens.size();
     if (isHaveUnidentified) {
-        std::cerr<<"Unidentified expression"<<std::endl;
-        std::exit(EXIT_FAILURE);
+        throw std::invalid_argument("Expression::Expression");
     }
 }
 

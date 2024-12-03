@@ -34,8 +34,7 @@ template<typename T>
 T Stack<T>::operator>>(T &to) {
     int count = 1;
     if (count > size()) {
-        std::cerr << "Stack size is too small" << std::endl;
-        exit(EXIT_FAILURE);
+        throw std::out_of_range("Stack::operator>>");
     }
     while (count--) {
         return top();
@@ -46,8 +45,7 @@ T Stack<T>::operator>>(T &to) {
 template<typename T>
 T& Stack<T>::operator[](int index) {
     if (index >= curSize) {
-        std::cerr << "Stack index out of bounds" << std::endl;
-        std::exit(EXIT_FAILURE);
+        throw std::out_of_range("Stack::operator[]");
     }
     return array[index];
 }
@@ -159,8 +157,7 @@ void Stack<T>::push(T data) {
 template<typename T>
 void Stack<T>::pop() {
     if (curSize ==0) {
-        std::cerr<<"Stack is empty"<<std::endl;
-        std::exit(EXIT_FAILURE);
+        throw std::out_of_range("Stack::pop");
     }
     curSize--;
 }
@@ -182,8 +179,7 @@ int Stack<T>::size() const {
 template<typename T>
 T Stack<T>::top() const {
     if (curSize == 0) {
-        std::cerr<<"Stack is empty"<<std::endl;
-        std::exit(EXIT_FAILURE);
+        throw std::out_of_range("Stack::operator[]");
     }
     return array[curSize-1];
 }

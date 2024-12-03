@@ -5,6 +5,7 @@
 #include "Calculator.h"
 #include "stack.h"
 #include <math.h>
+#include <numeric>
 
 void Calculator::addOperation(std::string operationNotation,
                               std::function<long double(std::vector<long double>&)> operationLogic,
@@ -48,8 +49,7 @@ void Calculator::executeOperation(Stack<Number> &stackForNumbers,
     std::vector<long double> operands;
     while (numberOfOperands--) { // пока не возьмем сколько надо операндов
         if (stackForNumbers.empty()) { // если не можем взять из стека операнд, значит выражение было неправильным
-            std::cerr << "Incrorrext expression" << std::endl;
-            std::exit(EXIT_FAILURE);
+            throw std::invalid_argument("Calculator::executeOperation");
         }
         operands.push_back(stackForNumbers.top().getValue());
         stackForNumbers.pop(); // удаляем только что взятый операнд
@@ -61,8 +61,7 @@ void Calculator::executeOperation(Stack<Number> &stackForNumbers,
 
     if (!castedTop->checkIsAbleToMakeOperation(operands)) {
         // проверка на возможность вычисления
-        std::cerr << "Incrorrext expression" << std::endl;
-        std::exit(EXIT_FAILURE);
+        throw std::invalid_argument("Calculator::executeOperation");
     }
     stackForNumbers<<(Number(castedTop->makeOperation(operands)));
     stackForBracketsAndOperations.pop();
@@ -133,8 +132,7 @@ void Calculator::processRemainingOperations(Stack<Number> &stackForNumbers,
 long double Calculator::calculate(std::string &stringExpression) {
     Expression expr(stringExpression,definedOperations);
     if (!expr.isCorrect()) {
-        std::cerr << "Invalid expression: " << stringExpression << std::endl;
-        std::exit(EXIT_FAILURE);
+        throw std::invalid_argument("Calculator::calculate");
     }
     long double res = 0;
     int curSize = expr.size();
