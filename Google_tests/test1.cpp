@@ -111,96 +111,96 @@ TEST_F(CalculatorTest, HandlesJustNumbers) {
     std::string expr;
     for (int i = -10;i<=10;i++) {
         expr = std::to_string(i);
-        EXPECT_EQ(i,calculatorDevice.calculate(expr));
+        EXPECT_EQ(i,calculatorDevice.processString(expr));
     }
 }
 
 TEST_F(CalculatorTest, HandlesNulls)
 {
     std::string expr = "0+0-0+0-0-0+0";
-    EXPECT_EQ(0,calculatorDevice.calculate(expr));
+    EXPECT_EQ(0,calculatorDevice.processString(expr));
 }
 TEST_F(CalculatorTest, HandlesInput1) {
     std::string expr = "1+2-3+4*2/2+10^2";
-    EXPECT_EQ(104,calculatorDevice.calculate(expr));
+    EXPECT_EQ(104,calculatorDevice.processString(expr));
 }
 TEST_F(CalculatorTest, HandlesInput2) {
     std::string  expr = "2*2*2^1";
-    EXPECT_EQ(8,calculatorDevice.calculate(expr));
+    EXPECT_EQ(8,calculatorDevice.processString(expr));
 }
 TEST_F(CalculatorTest, HandlesInput3) {
     std::string expr = "2*4-4^2+81/3^2";
-    EXPECT_EQ(1,calculatorDevice.calculate(expr));
+    EXPECT_EQ(1,calculatorDevice.processString(expr));
 }
 TEST_F(CalculatorTest, HandlesInput4) {
     std::string expr = "1/1^1*1^100+1-1^100";
-    EXPECT_EQ(1,calculatorDevice.calculate(expr));
+    EXPECT_EQ(1,calculatorDevice.processString(expr));
 }
 TEST_F(CalculatorTest, HandlesInput5) {
     std::string expr = "1..0";
-    EXPECT_EQ(1,calculatorDevice.calculate(expr));
+    EXPECT_EQ(1,calculatorDevice.processString(expr));
 }
 TEST_F(CalculatorTest, HandlesInput6) {
     std::string expr = "1.";
-    EXPECT_EQ(1,calculatorDevice.calculate(expr));
+    EXPECT_EQ(1,calculatorDevice.processString(expr));
 }
 TEST_F(CalculatorTest, HandlesInput7) {
     std::string expr = "sqrt9";
-    EXPECT_EQ(3,calculatorDevice.calculate(expr));
+    EXPECT_EQ(3,calculatorDevice.processString(expr));
 }
 TEST_F(CalculatorTest, HandlesInput8) {
     std::string expr = "sqrt0";
-    EXPECT_EQ(0,calculatorDevice.calculate(expr));
+    EXPECT_EQ(0,calculatorDevice.processString(expr));
 }
 TEST_F(CalculatorTest, HandlesInput9) {
     std::string expr = "sqrt81";
-    EXPECT_EQ(9,calculatorDevice.calculate(expr));
+    EXPECT_EQ(9,calculatorDevice.processString(expr));
 }
 TEST_F(CalculatorTest, HandlesInput10) {
     std::string expr = "sqrt9*sin0";
-    EXPECT_EQ(0,calculatorDevice.calculate(expr));
+    EXPECT_EQ(0,calculatorDevice.processString(expr));
 }
 TEST_F(CalculatorTest, HandlesInput11) {
     std::string expr = "1+sqrt(18/2*2/3*3/2)+sin(0)";
-    EXPECT_EQ(4,calculatorDevice.calculate(expr));
+    EXPECT_EQ(4,calculatorDevice.processString(expr));
 }
 TEST_F(CalculatorTest, HandlesInput12) {
     std::string expr = "(0+2^2-4*sqrt(1))^2";
-    EXPECT_EQ(0,calculatorDevice.calculate(expr));
+    EXPECT_EQ(0,calculatorDevice.processString(expr));
 }
 TEST_F(CalculatorTest, HandlesInput13) {
     std::string expr = "-15+20*(-1)^3";
-    EXPECT_EQ(-35,calculatorDevice.calculate(expr));
+    EXPECT_EQ(-35,calculatorDevice.processString(expr));
 }
 TEST_F(CalculatorTest, HandlesInput14) {
     std::string expr = "1=";
-    EXPECT_THROW(calculatorDevice.calculate(expr),std::invalid_argument);
+    EXPECT_THROW(calculatorDevice.processString(expr),std::invalid_argument);
 }
 TEST_F(CalculatorTest, HandlesInput15) {
     std::string expr = "1=124972301746-930-7//ds'v,;dsmvpn123956==43--951028";
-    EXPECT_THROW(calculatorDevice.calculate(expr),std::invalid_argument);
+    EXPECT_THROW(calculatorDevice.processString(expr),std::invalid_argument);
 }
 TEST_F(CalculatorTest, HandlesInput16) {
     std::string expr = "(1+2*(-2/(-1)))";
-    EXPECT_EQ(5,calculatorDevice.calculate(expr));
+    EXPECT_EQ(5,calculatorDevice.processString(expr));
 }
 TEST_F(CalculatorTest, HandlesInput17) {
     std::string expr = "sqrt(9)*(1+2-(sqrt(169)*sin(0)))";
-    EXPECT_EQ(9,calculatorDevice.calculate(expr));
+    EXPECT_EQ(9,calculatorDevice.processString(expr));
 }
 TEST_F(CalculatorTest, HandlesInput18) {
     std::string expr = "3/3*(3*3)*3/3+3";
-    EXPECT_EQ(12,calculatorDevice.calculate(expr));
+    EXPECT_EQ(12,calculatorDevice.processString(expr));
 }
 TEST_F(CalculatorTest, HandlesInput19) {
     std::string expr = "-(-(-(-(-1))))";
-    EXPECT_EQ(-1,calculatorDevice.calculate(expr));
+    EXPECT_EQ(-1,calculatorDevice.processString(expr));
 }
 TEST_F(CalculatorTest, HandlesInput20) {
     std::string expr = "2^(1+3^(2))";
-    EXPECT_EQ(1024,calculatorDevice.calculate(expr));
+    EXPECT_EQ(1024,calculatorDevice.processString(expr));
 }
 TEST_F(CalculatorTest, HandlesInput21) {
     std::string expr = "aaaaaahelphelphelp";
-    EXPECT_THROW(calculatorDevice.calculate(expr),std::invalid_argument);
+    EXPECT_THROW(calculatorDevice.processString(expr),std::invalid_argument);
 }

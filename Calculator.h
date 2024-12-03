@@ -28,6 +28,10 @@ private:
                           long double &res);
     void executeOperation(Stack<Number> &stackForNumbers,
                           Stack<AtomicExpression*>  &stackForBracketsAndOperations);
+
+    bool isBracketsBalanced(std::string &stringExpression);
+    bool isAbleToCalculate(std::string &stringExpression);
+    long double calculate(std::string &stringExpression);
 public:
     Calculator();
     void addOperation(std::string operationNotation,
@@ -36,7 +40,7 @@ public:
                       int priority, int numberOfOperands);
 
     void removeOperation(std::string operationNotation);
-    long double calculate(std::string &stringExpression);
+    long double processString(std::string &stringExpression);
     ~Calculator() = default;
 };
 

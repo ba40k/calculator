@@ -4,6 +4,7 @@ project(my_calculator)
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(calculator main.cpp)
+include_directories(spdlog/include)
 add_library(calculator_lib STATIC AtomicExpression.cpp Calculator.cpp Expression.cpp)
 
 target_link_libraries(calculator calculator_lib)
