@@ -193,10 +193,7 @@ bool Calculator::isAbleToCalculate(std::string &stringExpression) {
     }
 }
 long double Calculator::processString(std::string &stringExpression) {
-    if (!isBracketsBalanced(stringExpression)) {
-        throw std::invalid_argument("Calculator::processString");
-    }
-    if (!isAbleToCalculate(stringExpression)) {
+    if (!isBracketsBalanced(stringExpression) || !isAbleToCalculate(stringExpression)) {
         throw std::invalid_argument("Calculator::processString");
     }
     return calculate(stringExpression);

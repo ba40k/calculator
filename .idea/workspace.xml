@@ -29,7 +29,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5bc36f40-2b2e-4e1b-ade5-2b5d0b5d86cb" name="Changes" comment="сделал обработку строки по тз + идентификацию вычисляемости строки более логичной" />
+    <list default="true" id="5bc36f40-2b2e-4e1b-ade5-2b5d0b5d86cb" name="Changes" comment="сделал обработку строки по тз + идентификацию вычисляемости строки более логичной">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -150,7 +152,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Google Test.Google_Tests_run">
+  <component name="RunManager" selected="CMake Application.calculator">
     <configuration name="Google_Tests_run" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="my_calculator" TARGET_NAME="Google_Tests_run" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="my_calculator" RUN_TARGET_NAME="Google_Tests_run" TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -194,6 +196,7 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Google Test.Google_Tests_run" />
       <item itemvalue="CMake Application.calculator" />
       <item itemvalue="CMake Application.calculator_lib" />
       <item itemvalue="CMake Application.gmock" />
@@ -201,7 +204,6 @@
       <item itemvalue="CMake Application.gtest" />
       <item itemvalue="CMake Application.gtest_main" />
       <item itemvalue="CTest Application.All CTest" />
-      <item itemvalue="Google Test.Google_Tests_run" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -233,6 +235,8 @@
       <workItem from="1733226108280" duration="548000" />
       <workItem from="1733244185559" duration="143000" />
       <workItem from="1733244665978" duration="3761000" />
+      <workItem from="1733250714861" duration="1756000" />
+      <workItem from="1733253532861" duration="4000" />
     </task>
     <task id="LOCAL-00001" summary="добавил stack.h и начал писать stack.cpp">
       <option name="closed" value="true" />
@@ -506,7 +510,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733249453161</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="сделал обработку строки по тз + идентификацию вычисляемости строки более логичной">
+      <option name="closed" value="true" />
+      <created>1733252336943</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1733252336943</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
