@@ -12,7 +12,7 @@ class Calculator {
 private:
     std::map<std::string,std::tuple< std::function<long double(std::vector<long double>&)>,
                                             std::function<bool(std::vector<long double>&)>,
-                                            int,int>> definedOperations;
+                                            int,int>> definedOperations;    // хранилище операций
 
     void processNumberCase(Expression &expr, int curPosition,Stack<Number> &stackForNumbers);
 
@@ -34,6 +34,7 @@ public:
                       std::function<long double (std::vector<long double>&)> operationLogic,
                       std::function<bool (std::vector<long double>&)> isAbleChecker,
                       int priority, int numberOfOperands);
+
     void removeOperation(std::string operationNotation);
     long double calculate(std::string &stringExpression);
     ~Calculator() = default;
