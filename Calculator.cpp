@@ -26,28 +26,28 @@ Calculator::Calculator() {
     spdlog::info("Function \"Calculator::Calculator\" has called ");
     addOperation("+", [](std::vector<long double>& operands) { return operands[0] + operands[1]; },
                                [](std::vector<long double> &operands) { return true; }, 0, 2);
-    spdlog::trace("Operation + added");
+    spdlog::trace("\"Calculator::Calculator\" : Operation + added");
     addOperation("-", [](std::vector<long double>& operands) { return operands[0] - operands[1]; },
                                [](std::vector<long double>& operands) { return true; }, 0, 2);
-    spdlog::trace("Operation - added");
+    spdlog::trace("\"Calculator::Calculator\" : Operation - added");
     addOperation("/", [](std::vector<long double>& operands) { return operands[0] / operands[1]; },
                                [](std::vector<long double>& operands) { return operands[1] != 0; }, 1, 2);
-    spdlog::trace("Operation / added");
+    spdlog::trace("\"Calculator::Calculator\" : Operation / added");
     addOperation("*", [](std::vector<long double>& operands) { return operands[0] * operands[1]; },
                                [](std::vector<long double>& operands) { return true; }, 1, 2);
-    spdlog::trace("Operation * added");
+    spdlog::trace("\"Calculator::Calculator\" : Operation * added");
     addOperation("^", [](std::vector<long double>& operands) { return std::pow(operands[0], operands[1]); },
                                [](std::vector<long double>& operands) { return (operands[1] > 0); }, 2, 2);
-    spdlog::trace("Operation ^ added");
+    spdlog::trace("\"Calculator::Calculator\" : Operation ^ added");
     addOperation("sqrt", [](std::vector<long double>& operands) { return sqrt(operands[0]); },
                                [](std::vector<long double>& operands) { return operands[0] >= 0; }, 3, 1);
-    spdlog::trace("Operation sqrt added");
+    spdlog::trace("\"Calculator::Calculator\" : Operation sqrt added");
     addOperation("sin", [](std::vector<long double>& operands) { return sin(operands[0]); },
                                [](std::vector<long double>& operands) { return true; }, 3, 1);
-    spdlog::trace("Operation sin added");
+    spdlog::trace("\"Calculator::Calculator\" : Operation sin added");
     addOperation("cos", [](std::vector<long double>& operands) { return cos(operands[0]); },
                                [](std::vector<long double>& operands) { return true; }, 3, 1);
-    spdlog::trace("Operation cos added");
+    spdlog::trace("\"Calculator::Calculator\" : Operation cos added");
     spdlog::info("Function \"Calculator::Calculator\" has ended ");
 }
 
@@ -56,16 +56,18 @@ void Calculator::executeOperation(Stack<Number> &stackForNumbers,
     spdlog::set_level(spdlog::level::trace);
     spdlog::info("Function \"Calculator::executeOperation\" has called ");
     auto castedTop = dynamic_cast<Operation *>(stackForBracketsAndOperations.top()); // берем операцию из стека
+
     int numberOfOperands = castedTop->getNumberOfOperands(); // смотрим в операции сколько ей надо операндов
     std::vector<long double> operands;
-    spdlog::trace("vector<long double> operands had been created");
+    spdlog::trace("\"Calculator::executeOperation\" : vector<long double> operands had been created");
     while (numberOfOperands--) { // пока не возьмем сколько надо операндов
         if (stackForNumbers.empty()) { // если не можем взять из стека операнд, значит выражение было неправильным
-            spdlog::error("in function \"Calculator::executeOperation\" not enough operands");
+            spdlog::error("\"Calculator::executeOperation\" : not enough operands");
             throw std::invalid_argument("Calculator::executeOperation");
         }
         operands.push_back(stackForNumbers.top().getValue());
-        spdlog::trace("Operand " + std::to_string(stackForNumbers.top().getValue()) + " has pushed into operands");
+        spdlog::trace("\"Calculator::executeOperation\" : operand " + std::to_string(stackForNumbers.top().getValue()) + " has pushed into operands");
+        spdlog::trace("\"Calculator::executeOperation\" : operand " + std::to_string(stackForNumbers.top().getValue()) + " has poped from stack");
         stackForNumbers.pop(); // удаляем только что взятый операнд
     }
 
@@ -73,55 +75,82 @@ void Calculator::executeOperation(Stack<Number> &stackForNumbers,
     reverse(operands.begin(), operands.end());  // из-за особенностей польской нотации мы взяли операнды в обратном порядке
                                                         // например 0-1 в польской нотации имеет вид 01-, если бы мы не сделали переворот, то
                                                         // массив операндов был 1 0 и мы бы отнимали от 1 0 а не наоборот
-    spdlog::trace("operands had been reversed");
-    spdlog::trace("trying to get operation");
+
+    spdlog::trace("\"Calculator::executeOperation\" : operands had been reversed");
+    spdlog::trace("\"Calculator::executeOperation\" : trying to get operation");
     if (!castedTop->checkIsAbleToMakeOperation(operands)) {
         // проверка на возможность вычисления
-        spdlog::error("in function \"Calculator::executeOperation\" detected incalculable expression");
+        spdlog::error("\"Calculator::executeOperation\" : detected incalculable expression");
         throw std::invalid_argument("Calculator::executeOperation");
     }
-    spdlog::trace("operation getted");
+    spdlog::trace("\"Calculator::executeOperation\" : operation getted");
     stackForNumbers<<(Number(castedTop->makeOperation(operands)));
-    spdlog::trace(std::to_string(castedTop->makeOperation(operands)) + " was placed into stack");
+    spdlog::trace("\"Calculator::executeOperation\" : " + std::to_string(castedTop->makeOperation(operands)) + " was placed into stack");
     stackForBracketsAndOperations.pop(); //  удаляем использованную операцию
-    spdlog::trace("operation popped");
+    spdlog::trace("\"Calculator::executeOperation\" : operation popped");
     spdlog::info("Function \"Calculator::executeOperation\" has ended ");
 }
 
 void Calculator::processNumberCase(Expression &expr, int curPosition, Stack<Number> &stackForNumbers) {
+    spdlog::set_level(spdlog::level::trace);
+    spdlog::info("Function \"Calculator::processNumberCase\" has called ");
+
     auto castedTop = dynamic_cast<Number *>(expr[curPosition]);
+
     if (castedTop) {
+        spdlog::trace("\"Calculator::processNumberCase\" : number at position + " + std::to_string(curPosition));
         // встречено число - просто выгружаем его в стек для чисел
         stackForNumbers << (*castedTop);
+        spdlog::trace("\"Calculator::processNumberCase\" : " + std::to_string(castedTop->getValue()) + " was pushed into stack");
     }
+
+    spdlog::info("Function \"Calculator::processNumberCase\" has ended ");
 }
 
 void Calculator::processBracketCase(Expression &expr, const int curPosition,
                                     Stack<AtomicExpression *> &stackForBracketsAndOperations,
                                     Stack<Number> &stackForNumbers) {
+    spdlog::set_level(spdlog::level::trace);
+    spdlog::info("Function \"Calculator::processBracketCase\" has called ");
     auto castedTop = dynamic_cast<Bracket *>(expr[curPosition]);
     if (castedTop) {
         // встречена скобка
         char bracketType = castedTop->bracketType();
         if (bracketType == '(') {
+            spdlog::trace("\"Calculator::processBracketCase\" : \"(\" at position + " + std::to_string(curPosition));
             // если скобка открывающая - то кладем её в стек и всё
-            stackForBracketsAndOperations << (expr[curPosition]);
+            stackForBracketsAndOperations << (castedTop);
+
+            spdlog::trace("\"Calculator::processBracketCase\" : \"(\" was placed into stack)");
         } else {
-            while (!(dynamic_cast<Bracket *>(stackForBracketsAndOperations.top()) &&
-                     dynamic_cast<Bracket *>(stackForBracketsAndOperations.top())->bracketType() == '(')) {
+            spdlog::trace("\"Calculator::processBracketCase\" : \")\" at position + )");
+
+            auto castedBracket = dynamic_cast<Bracket *>(stackForBracketsAndOperations.top());
+            spdlog::trace("\"Calculator::processBracketCase\" : trying to find \")\" ");
+
+            while (!castedBracket) { // идем по стеку пока не встретим открывающую скобку
                 // выполняем верхнюю операцию
+              //  std::cout<<"SIZE IS "<<stackForBracketsAndOperations.size()<<std::endl;
+                spdlog::trace("\"Calculator::processBracketCase\" : operation found ");
                 executeOperation(stackForNumbers, stackForBracketsAndOperations);
+               // std::cout<<"SIZE IS "<<stackForBracketsAndOperations.size()<<std::endl;
+                castedBracket = dynamic_cast<Bracket *>(stackForBracketsAndOperations.top());
             }
-            stackForBracketsAndOperations.pop(); // удаляем только что проделанную операцию
+            spdlog::trace("\"Calculator::processBracketCase\" : \")\" found");
+            stackForBracketsAndOperations.pop(); // удаляем  найденную открывающую скобку
         }
     }
+    spdlog::info("Function \"Calculator::processBracketCase\" has ended ");
 }
 
 void Calculator::processOperationsCase(Expression &expr, int curPosition,
                                        Stack<AtomicExpression *> &stackForBracketsAndOperations,
                                        Stack<Number> &stackForNumbers) {
+    spdlog::set_level(spdlog::level::trace);
+    spdlog::info("Function \"Calculator::processOperationsCase\" has called ");
     auto castedTop = dynamic_cast<Operation *>(expr[curPosition]);
     if (castedTop) {
+        spdlog::info("\"Calculator::processOperationsCase\" : operation at position" + std::to_string(curPosition));
         // случай когда попалась операция
         int currentPriority = castedTop->getPriority();
         // большой страшный цикл, который по сути просто идет и смотрит на верхнюю операцию и если она приоритетнее, то выполняет ее
@@ -133,6 +162,7 @@ void Calculator::processOperationsCase(Expression &expr, int curPosition,
         }
         stackForBracketsAndOperations << (expr[curPosition]);
     }
+    spdlog::info("Function \"Calculator::processOperationsCase\" has ended ");
 }
 
 void Calculator::processRemainingOperations(Stack<Number> &stackForNumbers,
