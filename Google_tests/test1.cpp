@@ -204,3 +204,47 @@ TEST_F(CalculatorTest, HandlesInput21) {
     std::string expr = "aaaaaahelphelphelp";
     EXPECT_THROW(calculatorDevice.processString(expr),std::invalid_argument);
 }
+TEST_F(CalculatorTest, HandlesInput22) {
+    std::string expr = "1+2";
+    EXPECT_EQ(calculatorDevice.processString(expr),3);
+}
+TEST_F(CalculatorTest, HandlesInput23) {
+    std::string expr = "0+0";
+    EXPECT_EQ(calculatorDevice.processString(expr),0);
+}
+TEST_F(CalculatorTest, HandlesInput24) {
+    std::string expr = "-0";
+    EXPECT_EQ(calculatorDevice.processString(expr),0);
+}
+TEST_F(CalculatorTest, HandlesInput25) {
+    std::string expr = "0*124";
+    EXPECT_EQ(calculatorDevice.processString(expr),0);
+}
+TEST_F(CalculatorTest, HandlesInput26) {
+    std::string expr = "12*12";
+    EXPECT_EQ(calculatorDevice.processString(expr),144);
+}
+TEST_F(CalculatorTest, HandlesInput27) {
+    std::string expr = "90/10";
+    EXPECT_EQ(calculatorDevice.processString(expr),9);
+}
+TEST_F(CalculatorTest, HandlesInput28) {
+    std::string expr = "900/1";
+    EXPECT_EQ(calculatorDevice.processString(expr),900);
+}
+TEST_F(CalculatorTest, HandlesInput29) {
+    std::string expr = "5^3";
+    EXPECT_EQ(calculatorDevice.processString(expr),125);
+}
+TEST_F(CalculatorTest, HandlesInput30) {
+    std::string expr = "2^2";
+    EXPECT_EQ(calculatorDevice.processString(expr),4);
+}
+TEST_F(CalculatorTest, HandlesInput31) {
+    std::string expr = "sqrt(900)";
+    EXPECT_EQ(calculatorDevice.processString(expr),30);
+}
+TEST_F(CalculatorTest, HandlesInput32) {
+    std::string expr = "6*6^2";
+    EXPECT_EQ(calculatorDevice.processString(expr),216);
+}
