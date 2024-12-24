@@ -17,7 +17,7 @@ public:
         return type;
     }
     explicit AtomicExpression(const std::string &_type) : type(_type) {};
-    ~AtomicExpression() = default;
+    virtual ~AtomicExpression() = default;
 };
 class Number : public AtomicExpression {
 private:
