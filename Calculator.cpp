@@ -21,7 +21,7 @@ void Calculator::removeOperation(std::string operationNotation) {
 
 Calculator::Calculator() {
     // добавление операций
-    spdlog::set_level(spdlog::level::trace);
+
 
     spdlog::info("Function \"Calculator::Calculator\" has called ");
     addOperation("+", [](std::vector<long double>& operands) { return operands[0] + operands[1]; },
@@ -53,7 +53,7 @@ Calculator::Calculator() {
 
 void Calculator::executeOperation(Stack<Number> &stackForNumbers,
                                   Stack<AtomicExpression *> &stackForBracketsAndOperations) {
-    spdlog::set_level(spdlog::level::trace);
+
     spdlog::info("Function \"Calculator::executeOperation\" has called ");
     auto castedTop = dynamic_cast<Operation *>(stackForBracketsAndOperations.top()); // берем операцию из стека
 
@@ -92,7 +92,7 @@ void Calculator::executeOperation(Stack<Number> &stackForNumbers,
 }
 
 void Calculator::processNumberCase(Expression &expr, int curPosition, Stack<Number> &stackForNumbers) {
-    spdlog::set_level(spdlog::level::trace);
+
     spdlog::info("Function \"Calculator::processNumberCase\" has called ");
 
     auto castedTop = dynamic_cast<Number *>(expr[curPosition]);
@@ -110,7 +110,7 @@ void Calculator::processNumberCase(Expression &expr, int curPosition, Stack<Numb
 void Calculator::processBracketCase(Expression &expr, const int curPosition,
                                     Stack<AtomicExpression *> &stackForBracketsAndOperations,
                                     Stack<Number> &stackForNumbers) {
-    spdlog::set_level(spdlog::level::trace);
+
     spdlog::info("Function \"Calculator::processBracketCase\" has called ");
     auto castedTop = dynamic_cast<Bracket *>(expr[curPosition]);
     if (castedTop) {
@@ -146,7 +146,7 @@ void Calculator::processBracketCase(Expression &expr, const int curPosition,
 void Calculator::processOperationsCase(Expression &expr, int curPosition,
                                        Stack<AtomicExpression *> &stackForBracketsAndOperations,
                                        Stack<Number> &stackForNumbers) {
-    spdlog::set_level(spdlog::level::trace);
+
     spdlog::info("Function \"Calculator::processOperationsCase\" has called ");
     auto castedTop = dynamic_cast<Operation *>(expr[curPosition]);
     if (castedTop) {
