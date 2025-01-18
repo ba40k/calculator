@@ -37,8 +37,8 @@ Stack<T>& Stack<T>::operator>>(T &to) {
         throw std::out_of_range("Stack::operator>>");
     }
     while (count--) {
-        pop();
         to = top();
+        pop();
     }
     return *this;
 }
