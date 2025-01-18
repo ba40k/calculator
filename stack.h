@@ -16,8 +16,8 @@ private:
 public:
     Stack();
     void pop();
-    void operator<<(const T &data);
-    T operator>>(T &to);
+    Stack<T>& operator<<(const T &data);
+    Stack<T>& operator>>(T &to);
     Stack<T>& operator=(const Stack<T>& other);
     bool operator==(const Stack &other) const;
     bool operator!=(const Stack &other) const;
@@ -31,15 +31,16 @@ public:
     ~Stack();
 };
 template<typename T>
-T Stack<T>::operator>>(T &to) {
+Stack<T>& Stack<T>::operator>>(T &to) {
     int count = 1;
     if (count > size()) {
         throw std::out_of_range("Stack::operator>>");
     }
     while (count--) {
-        return top();
         pop();
+        to = top();
     }
+    return *this;
 }
 
 template<typename T>
@@ -51,8 +52,9 @@ T& Stack<T>::operator[](int index) {
 }
 
 template<typename T>
-void Stack<T>::operator<<(const T &data) {
+Stack<T>& Stack<T>::operator<<(const T &data) {
     push(data);
+    return *this;
 }
 
 template<typename T>

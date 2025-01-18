@@ -29,8 +29,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5bc36f40-2b2e-4e1b-ade5-2b5d0b5d86cb" name="Changes" comment="исправил фатальный баг">
+    <list default="true" id="5bc36f40-2b2e-4e1b-ade5-2b5d0b5d86cb" name="Changes" comment=" тестикии">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +133,7 @@
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;ctest.advertisement.all.test.configuration.is.created&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/radamir/CLionProjects/calculator&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/radamir/CLionProjects/trees&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -196,7 +197,6 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Google Test.Google_Tests_run" />
       <item itemvalue="CMake Application.calculator" />
       <item itemvalue="CMake Application.calculator_lib" />
       <item itemvalue="CMake Application.gmock" />
@@ -204,6 +204,7 @@
       <item itemvalue="CMake Application.gtest" />
       <item itemvalue="CMake Application.gtest_main" />
       <item itemvalue="CTest Application.All CTest" />
+      <item itemvalue="Google Test.Google_Tests_run" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -237,7 +238,17 @@
       <workItem from="1733244665978" duration="3761000" />
       <workItem from="1733250714861" duration="1756000" />
       <workItem from="1733253532861" duration="4000" />
-      <workItem from="1734509802428" duration="3000" />
+      <workItem from="1734509802428" duration="888000" />
+      <workItem from="1734513118741" duration="1245000" />
+      <workItem from="1734520484276" duration="8000" />
+      <workItem from="1734520557917" duration="9000" />
+      <workItem from="1734729976147" duration="17000" />
+      <workItem from="1735072250007" duration="228000" />
+      <workItem from="1735137459224" duration="283000" />
+      <workItem from="1735194873662" duration="17000" />
+      <workItem from="1735248281591" duration="1055000" />
+      <workItem from="1735550101090" duration="477000" />
+      <workItem from="1737212396216" duration="689000" />
     </task>
     <task id="LOCAL-00001" summary="добавил stack.h и начал писать stack.cpp">
       <option name="closed" value="true" />
@@ -519,7 +530,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733252336943</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary=" тестикии">
+      <option name="closed" value="true" />
+      <created>1734510154053</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1734510154053</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -542,7 +561,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="написал reallocate" />
     <MESSAGE value="написал push" />
     <MESSAGE value="написал pop" />
     <MESSAGE value="написал empty,top,size,capacity" />
@@ -567,7 +585,8 @@
     <MESSAGE value="добавил исключения" />
     <MESSAGE value="немного исправил стек и добавил тестов к нему" />
     <MESSAGE value="сделал обработку строки по тз + идентификацию вычисляемости строки более логичной" />
-    <option name="LAST_COMMIT_MESSAGE" value="сделал обработку строки по тз + идентификацию вычисляемости строки более логичной" />
+    <MESSAGE value=" тестикии" />
+    <option name="LAST_COMMIT_MESSAGE" value=" тестикии" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
